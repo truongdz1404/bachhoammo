@@ -5,10 +5,9 @@ import { apiClient } from "@/lib/api-client";
 
 export default async function Home() {
   const session = await auth();
-  const req = await apiClient("samples/hello");
-  console.log(req);
-  const res = await req.text();
   if (session) {
+    const req = await apiClient("samples/hello");
+    const res = await req.text();
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
         <p>
