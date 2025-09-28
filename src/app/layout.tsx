@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Roboto_Mono } from "next/font/google";
 import "./globals.css";
-import { Suspense } from "react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,7 +21,6 @@ export const metadata: Metadata = {
 
 export default function RootLayout(
   props: Readonly<{
-    modal: React.ReactNode;
     children: React.ReactNode;
   }>
 ) {
@@ -31,10 +29,7 @@ export default function RootLayout(
       lang="en"
       className={`${inter.variable} ${roboto_mono.variable} antialiased`}
     >
-      <body>
-        <Suspense>{props.modal}</Suspense>
-        <Suspense>{props.children}</Suspense>
-      </body>
+      <body>{props.children}</body>
     </html>
   );
 }
