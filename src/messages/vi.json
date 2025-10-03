@@ -1,0 +1,16 @@
+{
+  "header": {
+    "sellerChannel": "Kênh Người Bán",
+    "becomeSeller": "Trở thành Người bán",
+    "notifications": "Thông báo",
+    "support": "Hỗ trợ",
+    "language": "Tiếng Việt",
+    "register": "Đăng ký",
+    "login": "Đăng nhập",
+    "search": "Tìm kiếm",
+    "searchPlaceholder": "Tìm kiếm các sản phẩm, dịch vụ giá rẻ - Đăng ký ngay!",
+    "menu": "Menu",
+    "close": "Đóng",
+    "languageLabel": "Ngôn ngữ"
+  }
+}

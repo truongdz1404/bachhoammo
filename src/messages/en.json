@@ -1,0 +1,16 @@
+{
+  "header": {
+    "sellerChannel": "Seller Channel",
+    "becomeSeller": "Become a Seller",
+    "notifications": "Notifications",
+    "support": "Support",
+    "language": "English",
+    "register": "Register",
+    "login": "Login",
+    "search": "Search",
+    "searchPlaceholder": "Search for affordable products and services - Register now!",
+    "menu": "Menu",
+    "close": "Close",
+    "languageLabel": "Language"
+  }
+}

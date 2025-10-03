@@ -1,7 +1,11 @@
-import { auth } from "@/auth";
+import { auth as middleware } from "@/auth";
+import { routing } from "@/i18n/routing";
+import createMiddleware from "next-intl/middleware";
 import { NextResponse } from "next/server";
 
-export default auth((req) => {
+const intlMiddleware = createMiddleware(routing);
+
+export default middleware((req) => {
   const session = req.auth;
 
   const signOutPath = "/api/auth/signout";
@@ -13,7 +17,7 @@ export default auth((req) => {
     return NextResponse.redirect(new URL(signOutPath, req.url));
   }
 
-  return NextResponse.next();
+  return intlMiddleware(req);
 });
 
 export const config = {
