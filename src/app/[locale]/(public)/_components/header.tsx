@@ -1,9 +1,21 @@
 "use client";
 
 import LanguageSwitcher from "@/app/[locale]/(public)/_components/language-switcher";
+import { Notification } from "@/app/[locale]/(public)/_components/notification";
+import Register from "@/components/auth/register";
+import SignIn from "@/components/auth/signin";
+import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Bell, HelpCircle, Menu, Search, X } from "lucide-react";
+import {
+  ArrowLeft,
+  Bell,
+  BotMessageSquare,
+  HelpCircle,
+  Menu,
+  Search,
+  X,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useState } from "react";
@@ -34,7 +46,7 @@ export function Header({ isSticky = true }: HeaderProps) {
   return (
     <header className={headerClasses}>
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-10 text-xs">
+        <div className="flex items-center justify-between h-9 text-[0.8rem]">
           <div className="flex items-center gap-1 md:gap-2 h-full">
             <Button
               variant="ghost"
@@ -66,106 +78,70 @@ export function Header({ isSticky = true }: HeaderProps) {
           </div>
 
           <div className="flex items-center gap-2 md:gap-4 h-full">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-full p-0! hover:bg-transparent hover:opacity-80 text-primary-foreground hidden md:flex font-normal"
-            >
-              <Bell className="h-4 w-4" />
-              <span className="hidden lg:inline text-xs">
-                {t("notifications")}
-              </span>
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-full p-0! hover:bg-transparent hover:opacity-80 text-primary-foreground hidden md:flex  font-normal"
+            <Notification className="hidden md:flex h-full items-center z-10" />
+            <a
+              href="#"
+              className="items-center gap-1 h-full hover:bg-transparent hover:opacity-80 text-primary-foreground hidden md:flex font-normal"
             >
               <HelpCircle className="h-4 w-4" />
-              <span className="hidden lg:inline text-xs">{t("support")}</span>
-            </Button>
-            <LanguageSwitcher className="h-full p-0! hover:bg-transparent hover:opacity-80 text-primary-foreground hidden sm:flex font-normal" />
+              <span className="hidden lg:inline text-[0.8rem]">
+                {t("support")}
+              </span>
+            </a>
+            <LanguageSwitcher className="hidden md:flex h-full items-center z-10" />
             <div className="flex items-center gap-1 h-full">
-              <a
-                href="#"
-                className="hover:opacity-80 transition-opacity h-full flex items-center"
-              >
+              <Register className="hover:opacity-80 transition-opacity h-full flex items-center">
                 {t("register")}
-              </a>
+              </Register>
               <span className="text-primary-foreground/40">|</span>
-              <a
-                href="#"
-                className="hover:opacity-80 transition-opacity h-full flex items-center"
-              >
+              <SignIn className="hover:opacity-80 transition-opacity h-full flex items-center">
                 {t("login")}
-              </a>
+              </SignIn>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 flex">
+      <div className="container mx-auto px-4 py-1 flex justify-between">
         <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-          <div className="bg-white text-primary rounded-lg p-2">
-            <svg
-              className="h-6 w-6 md:h-8 md:w-8"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12 2L2 7L12 12L22 7L12 2Z"
-                fill="currentColor"
-                opacity="0.9"
-              />
-              <path
-                d="M2 17L12 22L22 17"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M2 12L12 17L22 12"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
-          <span className="text-xl md:text-2xl font-bold text-white">
-            BachHoaMMO
+          <Logo className="size-10" inverse={true} />
+          <span className="relative select-none">
+            <span className="absolute -bottom-1 right-0 text-[0.5rem]">
+              MMO
+            </span>
+            <span className="text-xl md:text-2xl text-primary-foreground font-(family-name:--font-staatliches)">
+              BACH HOA
+            </span>
           </span>
         </Link>
 
         <Button
           variant="ghost"
           size="sm"
-          className="h-auto p-2 hover:bg-white/10 text-primary-foreground md:hidden"
+          className="p-2 size-10 hover:bg-white/10 text-primary-foreground md:hidden"
           onClick={() => setMobileSearchOpen(true)}
         >
-          <Search className="h-5 w-5" />
+          <Search className="size-5" />
           <span className="sr-only">{t("search")}</span>
         </Button>
 
-        <div className="hidden md:flex flex-1 max-w-3xl flex-col">
+        <div className="hidden md:flex flex-1 max-w-7xl flex-col ml-12">
           <div className="relative">
             <Input
               type="search"
               placeholder={t("searchPlaceholder")}
-              className="w-full pr-12 h-10 md:h-11 bg-white text-foreground border-0 focus-visible:ring-2 focus-visible:ring-white/50 text-sm"
+              className="w-full pr-12 h-10 bg-primary-foreground text-foreground border-0 focus-visible:ring-2 focus-visible:ring-white/50 text-sm"
             />
             <Button
               size="icon"
-              className="absolute right-0 top-0 h-10 md:h-11 w-10 md:w-12 rounded-l-none bg-white hover:bg-white/90 text-primary"
+              className="absolute right-1 top-1 h-8 w-13 md:w-14 hover:bg-primary/90 bg-primary text-primary-foreground"
             >
               <Search className="h-4 w-4 md:h-5 md:w-5" />
               <span className="sr-only">{t("search")}</span>
             </Button>
           </div>
 
-          <div className="flex items-center gap-3 overflow-hidden my-1">
+          <div className="flex items-center gap-3 overflow-hidden mt-1">
             {SEARCH_SUGGESTIONS.map((suggestion) => {
               const hiddenClass =
                 suggestion.showOn === "lg"
@@ -177,13 +153,19 @@ export function Header({ isSticky = true }: HeaderProps) {
                 <a
                   key={suggestion.id}
                   href="#"
-                  className={`hover:opacity-80 transition-opacity flex-shrink-0 ${hiddenClass} text-xs`}
+                  className={`hover:opacity-80 transition-opacity flex-shrink-0 ${hiddenClass} text-xs text-primary-foreground/90`}
                 >
                   {suggestion.label}
                 </a>
               );
             })}
           </div>
+        </div>
+
+        <div className="hidden lg:flex items-center mx-14">
+          <Button variant="ghost" className="cursor-pointer">
+            <BotMessageSquare className="size-8" />
+          </Button>
         </div>
       </div>
 
@@ -193,72 +175,49 @@ export function Header({ isSticky = true }: HeaderProps) {
             className="fixed inset-0 bg-black/50 z-40 md:hidden"
             onClick={() => setMobileSearchOpen(false)}
           />
-          <div className="fixed inset-x-0 top-0 bottom-0 w-80 bg-primary text-primary-foreground z-50 md:hidden overflow-y-auto">
-            <div className="p-4">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-md font-semibold">{t("search")}</h2>
+          <div className="fixed inset-x-0 top-0 bg-primary text-primary-foreground z-50 md:hidden p-4">
+            <div className="flex items-center gap-2 mb-4 h-full">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="p-1 size-8 hover:bg-primary-foreground/20 text-primary-foreground rounded-full"
+                onClick={() => setMobileSearchOpen(false)}
+              >
+                <ArrowLeft className="h-5 w-5" />
+                <span className="sr-only">{t("back")}</span>
+              </Button>
+              <div className="flex-1 relative">
+                <Input
+                  type="search"
+                  placeholder="Netflex bao ship 0Đ - Đăng ký ngay!"
+                  className="w-full pr-12 h-10 bg-white text-foreground border-0 focus-visible:ring-2 focus-visible:ring-white/50 text-sm"
+                  autoFocus
+                />
                 <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-auto p-1 hover:bg-transparent hover:opacity-80 text-primary-foreground"
-                  onClick={() => setMobileSearchOpen(false)}
+                  size="icon"
+                  className="absolute right-0 top-0 h-10 w-10 rounded-l-none bg-white hover:bg-white/90 text-primary"
                 >
-                  <X className="h-5 w-5" />
-                  <span className="sr-only">{t("close")}</span>
+                  <Search className="h-4 w-4" />
+                  <span className="sr-only">{t("search")}</span>
                 </Button>
               </div>
-              <div className="flex flex-col gap-4">
+            </div>
+            <div className="flex flex-col gap-2 text-sm">
+              {SEARCH_SUGGESTIONS.slice(0, 5).map((suggestion) => (
                 <a
-                  href="#"
-                  className="hover:opacity-80 transition-opacity py-2 border-b border-primary-foreground/20"
-                  onClick={() => setMobileSearchOpen(false)}
-                >
-                  {t("sellerChannel")}
-                </a>
-                <a
-                  href="#"
-                  className="hover:opacity-80 transition-opacity py-2 border-b border-primary-foreground/20"
-                  onClick={() => setMobileSearchOpen(false)}
-                >
-                  {t("becomeSeller")}
-                </a>
-                <a
-                  href="#"
-                  className="hover:opacity-80 transition-opacity py-2 border-b border-primary-foreground/20 flex items-center gap-2"
-                  onClick={() => setMobileSearchOpen(false)}
-                >
-                  <Bell className="h-4 w-4" />
-                  {t("notifications")}
-                </a>
-                <a
-                  href="#"
-                  className="hover:opacity-80 transition-opacity py-2 border-b border-primary-foreground/20 flex items-center gap-2"
-                  onClick={() => setMobileSearchOpen(false)}
-                >
-                  <HelpCircle className="h-4 w-4" />
-                  {t("support")}
-                </a>
-                <a
-                  href="#"
-                  className="hover:opacity-80 transition-opacity py-2 border-b border-primary-foreground/20"
-                  onClick={() => setMobileSearchOpen(false)}
-                >
-                  {t("register")}
-                </a>
-                <a
+                  key={suggestion.id}
                   href="#"
                   className="hover:opacity-80 transition-opacity py-2"
                   onClick={() => setMobileSearchOpen(false)}
                 >
-                  {t("login")}
+                  {suggestion.label}
                 </a>
-              </div>
+              ))}
             </div>
           </div>
         </>
       )}
 
-      {/* Mobile Menu */}
       {mobileMenuOpen && (
         <>
           <div
@@ -279,7 +238,7 @@ export function Header({ isSticky = true }: HeaderProps) {
                   <span className="sr-only">{t("close")}</span>
                 </Button>
               </div>
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-4 text-sm">
                 <a
                   href="#"
                   className="hover:opacity-80 transition-opacity py-2 border-b border-primary-foreground/20"
@@ -309,20 +268,6 @@ export function Header({ isSticky = true }: HeaderProps) {
                 >
                   <HelpCircle className="h-4 w-4" />
                   {t("support")}
-                </a>
-                <a
-                  href="#"
-                  className="hover:opacity-80 transition-opacity py-2 border-b border-primary-foreground/20"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {t("register")}
-                </a>
-                <a
-                  href="#"
-                  className="hover:opacity-80 transition-opacity py-2"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {t("login")}
                 </a>
               </div>
             </div>

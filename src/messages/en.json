@@ -1,16 +1,20 @@
 {
   "header": {
-    "sellerChannel": "Seller Channel",
+    "sellerChannel": "Seller Centre",
     "becomeSeller": "Become a Seller",
     "notifications": "Notifications",
     "support": "Support",
     "language": "English",
     "register": "Register",
+    "signout": "Signout",
     "login": "Login",
     "search": "Search",
+    "back": "Back",
     "searchPlaceholder": "Search for affordable products and services - Register now!",
     "menu": "Menu",
     "close": "Close",
-    "languageLabel": "Language"
+    "languageLabel": "Language",
+    "viewAll": "View All",
+    "resentNotifications": "Recently Received Notifications"
   }
 }

@@ -2,7 +2,7 @@ import { routing } from "@/i18n/routing";
 import type { Metadata } from "next";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import { Inter, Roboto_Mono } from "next/font/google";
+import { Inter, Roboto_Mono, Staatliches } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 
@@ -18,9 +18,16 @@ const roboto_mono = Roboto_Mono({
   display: "swap",
 });
 
+const staatliches = Staatliches({
+  subsets: ["latin"],
+  variable: "--font-staatliches",
+  display: "swap",
+  weight: "400",
+});
+
 export const metadata: Metadata = {
   title: "BachHoaMMO",
-  description: "A online movie website",
+  description: "A online marketplace",
 };
 
 type Props = {
@@ -43,9 +50,9 @@ export default async function RootLayout({ children, params }: Props) {
   return (
     <html
       lang={locale}
-      className={`${inter.variable} ${roboto_mono.variable} antialiased`}
+      className={`${inter.variable} ${roboto_mono.variable} ${staatliches.variable} antialiased`}
     >
-      <body>
+      <body className="bg-[#f5f5f5]">
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>

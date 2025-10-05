@@ -6,11 +6,15 @@
     "support": "Hỗ trợ",
     "language": "Tiếng Việt",
     "register": "Đăng ký",
+    "signout": "Đăng xuất",
     "login": "Đăng nhập",
     "search": "Tìm kiếm",
+    "back": "Quay lại",
     "searchPlaceholder": "Tìm kiếm các sản phẩm, dịch vụ giá rẻ - Đăng ký ngay!",
     "menu": "Menu",
     "close": "Đóng",
-    "languageLabel": "Ngôn ngữ"
+    "languageLabel": "Ngôn ngữ",
+    "viewAll": "Xem Tất Cả",
+    "resentNotifications": "Thông Báo Mới Nhận"
   }
 }

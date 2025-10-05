@@ -1,23 +1,19 @@
-import { signIn } from "@/auth";
+import { getLoginUrl } from "@/lib/auth-urls";
 
 interface SignInProps {
-  className?: string;
+  readonly className?: string;
+  readonly children: React.ReactNode;
 }
 
-export default function SignIn({ className }: SignInProps) {
+export default function SignIn({ className, children }: SignInProps) {
+  const handleSignIn = async () => {
+    const url = await getLoginUrl();
+    window.location.href = url;
+  };
+
   return (
-    <form
-      action={async () => {
-        "use server";
-        await signIn();
-      }}
-    >
-      <button
-        type="submit"
-        className={`px-2 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 ${className}`}
-      >
-        Sign in
-      </button>
-    </form>
+    <button onClick={handleSignIn} className={className}>
+      {children}
+    </button>
   );
 }

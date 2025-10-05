@@ -45,26 +45,26 @@
 
 :root {
   /* Updated color scheme to blue and white theme */
-  --background: oklch(1 0 0); /* white */
-  --foreground: oklch(0.4 0 0); /* dark gray */
-  --card: oklch(0.99 0 0); /* light gray */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.4 0 0);
+  --card: oklch(0.99 0 0);
   --card-foreground: oklch(0.4 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.4 0 0);
-  --primary: oklch(0.55 0.15 230); /* cyan blue */
-  --primary-foreground: oklch(1 0 0); /* white */
+  --primary: oklch(0.63 0.17 250);
+  --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.99 0 0);
   --secondary-foreground: oklch(0.4 0 0);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.55 0.15 230); /* cyan blue */
+  --accent: oklch(0.63 0.17 250);
   --accent-foreground: oklch(1 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(1 0 0);
   --ring: oklch(0.55 0.15 230 / 0.3);
-  --chart-1: oklch(0.55 0.15 230);
+  --chart-1: oklch(0.63 0.17 250);
   --chart-2: oklch(0.4 0 0);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
@@ -74,7 +74,7 @@
   --sidebar-foreground: oklch(0.4 0 0);
   --sidebar-primary: oklch(1 0 0);
   --sidebar-primary-foreground: oklch(0.4 0 0);
-  --sidebar-accent: oklch(0.55 0.15 230);
+  --sidebar-accent: oklch(0.63 0.17 250);
   --sidebar-accent-foreground: oklch(1 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.55 0.15 230 / 0.3);
@@ -87,13 +87,13 @@
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.145 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.55 0.15 230);
+  --primary: oklch(0.63 0.17 250);
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.55 0.15 230);
+  --accent: oklch(0.63 0.17 250);
   --accent-foreground: oklch(1 0 0);
   --destructive: oklch(0.396 0.141 25.723);
   --destructive-foreground: oklch(0.637 0.237 25.331);
@@ -122,4 +122,8 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.container {
+  @apply max-w-[78rem];
 }
