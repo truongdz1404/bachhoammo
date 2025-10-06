@@ -1,4 +1,4 @@
-import { getRegisterUrl } from "@/lib/auth-urls";
+import { signIn } from "next-auth/react";
 
 interface RegisterProps {
   readonly className?: string;
@@ -7,8 +7,11 @@ interface RegisterProps {
 
 export default function Register({ className, children }: RegisterProps) {
   const handleRegister = async () => {
-    const url = await getRegisterUrl();
-    window.location.href = url;
+    signIn("keycloak", {
+      redirect: true,
+      callbackUrl: "/",
+      action: "register",
+    });
   };
 
   return (

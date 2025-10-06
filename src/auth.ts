@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import { JWT } from "next-auth/jwt";
-import KeycloakProvider from "next-auth/providers/keycloak";
+import Keycloak from "next-auth/providers/keycloak";
 
 async function refreshAccessToken(token: JWT): Promise<JWT> {
   try {
@@ -35,12 +35,8 @@ async function refreshAccessToken(token: JWT): Promise<JWT> {
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  providers: [
-    KeycloakProvider({
-      clientId: process.env.KEYCLOAK_CLIENT_ID!,
-      issuer: process.env.KEYCLOAK_ISSUER!,
-    }),
-  ],
+  providers: [Keycloak],
+  debug: true,
   callbacks: {
     async jwt({ token, account }) {
       if (account) {

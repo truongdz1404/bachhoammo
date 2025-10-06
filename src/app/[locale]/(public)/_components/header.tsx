@@ -2,11 +2,13 @@
 
 import LanguageSwitcher from "@/app/[locale]/(public)/_components/language-switcher";
 import { Notification } from "@/app/[locale]/(public)/_components/notification";
+import { Profile } from "@/app/[locale]/(public)/_components/profile";
 import Register from "@/components/auth/register";
 import SignIn from "@/components/auth/signin";
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { DefaultUser } from "@auth/core/types";
 import {
   ArrowLeft,
   Bell,
@@ -31,9 +33,10 @@ const SEARCH_SUGGESTIONS = [
 
 interface HeaderProps {
   isSticky?: boolean;
+  user?: DefaultUser;
 }
 
-export function Header({ isSticky = true }: HeaderProps) {
+export function Header({ isSticky = true, user }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
@@ -89,15 +92,23 @@ export function Header({ isSticky = true }: HeaderProps) {
               </span>
             </a>
             <LanguageSwitcher className="hidden md:flex h-full items-center z-10" />
-            <div className="flex items-center gap-1 h-full">
-              <Register className="hover:opacity-80 transition-opacity h-full flex items-center">
-                {t("register")}
-              </Register>
-              <span className="text-primary-foreground/40">|</span>
-              <SignIn className="hover:opacity-80 transition-opacity h-full flex items-center">
-                {t("login")}
-              </SignIn>
-            </div>
+
+            {user ? (
+              <Profile
+                className="hidden md:flex h-full items-center z-10"
+                user={user}
+              />
+            ) : (
+              <div className="flex items-center gap-1 h-full">
+                <Register className="hover:opacity-80 transition-opacity h-full flex items-center">
+                  {t("register")}
+                </Register>
+                <span className="text-primary-foreground/40">|</span>
+                <SignIn className="hover:opacity-80 transition-opacity h-full flex items-center">
+                  {t("login")}
+                </SignIn>
+              </div>
+            )}
           </div>
         </div>
       </div>

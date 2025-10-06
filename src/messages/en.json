@@ -15,6 +15,9 @@
     "close": "Close",
     "languageLabel": "Language",
     "viewAll": "View All",
-    "resentNotifications": "Recently Received Notifications"
+    "resentNotifications": "Recently Received Notifications",
+    "myAccount": "My Account",
+    "myPurchase": "My Purchase",
+    "logout": "Logout"
   }
 }

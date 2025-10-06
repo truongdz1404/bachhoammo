@@ -33,10 +33,10 @@ export default function LanguageSwitcher({
     <div className={className}>
       <HoverPopup
         trigger={
-          <Button variant="ghost" size="sm" className={className}>
+          <Button variant="ghost" size="sm" className={cn(className, "p-0!")}>
             <Globe className="h-4 w-4" />
             <span className="hidden lg:inline text-xs">{t("language")}</span>
-            <ChevronDown className="size-4 " />
+            <ChevronDown className="size-4 hidden lg:inline" />
           </Button>
         }
         width="w-40"

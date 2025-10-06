@@ -1,4 +1,4 @@
-import { getLoginUrl } from "@/lib/auth-urls";
+import { signIn } from "next-auth/react";
 
 interface SignInProps {
   readonly className?: string;
@@ -7,8 +7,7 @@ interface SignInProps {
 
 export default function SignIn({ className, children }: SignInProps) {
   const handleSignIn = async () => {
-    const url = await getLoginUrl();
-    window.location.href = url;
+    await signIn();
   };
 
   return (

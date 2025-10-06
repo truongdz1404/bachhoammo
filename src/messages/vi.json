@@ -15,6 +15,9 @@
     "close": "Đóng",
     "languageLabel": "Ngôn ngữ",
     "viewAll": "Xem Tất Cả",
-    "resentNotifications": "Thông Báo Mới Nhận"
+    "resentNotifications": "Thông Báo Mới Nhận",
+    "myAccount": "Tài Khoản Của Tôi",
+    "myPurchase": "Đơn Mua",
+    "logout": "Đăng Xuất"
   }
 }
