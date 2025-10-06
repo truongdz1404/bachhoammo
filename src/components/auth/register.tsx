@@ -7,11 +7,8 @@ interface RegisterProps {
 
 export default function Register({ className, children }: RegisterProps) {
   const handleRegister = async () => {
-    signIn("keycloak", {
-      redirect: true,
-      callbackUrl: "/",
-      action: "register",
-    });
+    // await signIn("keycloak", undefined, { prompt: "create" });
+    await signIn();
   };
 
   return (

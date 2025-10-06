@@ -5,12 +5,12 @@ import Keycloak from "next-auth/providers/keycloak";
 async function refreshAccessToken(token: JWT): Promise<JWT> {
   try {
     const response = await fetch(
-      `${process.env.KEYCLOAK_ISSUER}/protocol/openid-connect/token`,
+      `${process.env.AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/token`,
       {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({
-          client_id: process.env.KEYCLOAK_CLIENT_ID!,
+          client_id: process.env.AUTH_KEYCLOAK_ID!,
           grant_type: "refresh_token",
           refresh_token: token.refreshToken as string,
         }),
@@ -36,7 +36,6 @@ async function refreshAccessToken(token: JWT): Promise<JWT> {
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [Keycloak],
-  debug: true,
   callbacks: {
     async jwt({ token, account }) {
       if (account) {
