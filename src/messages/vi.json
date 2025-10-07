@@ -19,5 +19,21 @@
     "myAccount": "Tài Khoản Của Tôi",
     "myPurchase": "Đơn Mua",
     "logout": "Đăng Xuất"
+  },
+  "shop": {
+    "shopRegistration": "Đăng ký trở thành Người bán",
+    "registration": {
+      "steps": {
+        "shopInfo": "Thông tin Shop",
+        "tax": "Thông tin thuế",
+        "identity": "Thông tin định danh",
+        "complete": "Hoàn tất"
+      },
+      "navigation": {
+        "back": "Quay lại",
+        "next": "Tiếp theo",
+        "finish": "Hoàn thành"
+      }
+    }
   }
 }

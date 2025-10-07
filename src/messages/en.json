@@ -19,5 +19,21 @@
     "myAccount": "My Account",
     "myPurchase": "My Purchase",
     "logout": "Logout"
+  },
+  "shop": {
+    "shopRegistration": "Register to become a Shop owner",
+    "registration": {
+      "steps": {
+        "shopInfo": "Shop Information",
+        "tax": "Tax Information",
+        "identity": "Identity Verification",
+        "complete": "Complete"
+      },
+      "navigation": {
+        "back": "Back",
+        "next": "Next",
+        "finish": "Finish"
+      }
+    }
   }
 }

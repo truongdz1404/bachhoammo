@@ -33,9 +33,18 @@ export default function LanguageSwitcher({
     <div className={className}>
       <HoverPopup
         trigger={
-          <Button variant="ghost" size="sm" className={cn(className, "p-0!")}>
+          <Button
+            variant="ghost"
+            size="sm"
+            className={cn(
+              className,
+              "p-0! hover:bg-transparent hover:opacity-80! hover:text-inherit cursor-pointer"
+            )}
+          >
             <Globe className="h-4 w-4" />
-            <span className="hidden lg:inline text-xs">{t("language")}</span>
+            <span className="hidden lg:inline text-[0.8rem]">
+              {t("language")}
+            </span>
             <ChevronDown className="size-4 hidden lg:inline" />
           </Button>
         }

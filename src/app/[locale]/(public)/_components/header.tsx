@@ -1,6 +1,5 @@
 "use client";
 
-import LanguageSwitcher from "@/app/[locale]/(public)/_components/language-switcher";
 import { Notification } from "@/app/[locale]/(public)/_components/notification";
 import { Profile } from "@/app/[locale]/(public)/_components/profile";
 import Register from "@/components/auth/register";
@@ -8,16 +7,16 @@ import SignIn from "@/components/auth/signin";
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { DefaultUser } from "@auth/core/types";
+import LanguageSwitcher from "@/components/ui/language-switcher";
 import {
   ArrowLeft,
-  Bell,
   BotMessageSquare,
   HelpCircle,
   Menu,
   Search,
   X,
 } from "lucide-react";
+import { User } from "next-auth";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useState } from "react";
@@ -33,7 +32,7 @@ const SEARCH_SUGGESTIONS = [
 
 interface HeaderProps {
   isSticky?: boolean;
-  user?: DefaultUser;
+  user?: User;
 }
 
 export function Header({ isSticky = true, user }: HeaderProps) {
@@ -71,12 +70,12 @@ export function Header({ isSticky = true, user }: HeaderProps) {
               <span className="text-primary-foreground/40 hidden sm:inline">
                 |
               </span>
-              <a
-                href="#"
+              <Link
+                href="/shop/registration"
                 className="hover:opacity-80 transition-opacity hidden h-full sm:flex items-center"
               >
                 {t("becomeSeller")}
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -238,11 +237,24 @@ export function Header({ isSticky = true, user }: HeaderProps) {
           <div className="fixed left-0 top-0 bottom-0 w-80 bg-primary text-primary-foreground z-50 md:hidden overflow-y-auto">
             <div className="p-4">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-semibold">{t("menu")}</h2>
+                <Link
+                  href="/"
+                  className="flex items-center gap-2 flex-shrink-0"
+                >
+                  <Logo className="size-10" inverse={true} />
+                  <span className="relative select-none">
+                    <span className="absolute -bottom-1 right-0 text-[0.5rem]">
+                      MMO
+                    </span>
+                    <span className="text-xl md:text-2xl text-primary-foreground font-(family-name:--font-staatliches)">
+                      BACH HOA
+                    </span>
+                  </span>
+                </Link>
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-auto p-1 hover:bg-transparent hover:opacity-80 text-primary-foreground"
+                  className="h-auto p-1 hover:bg-transparent hover:opacity-80 text-primary-foreground cursor-pointer"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <X className="h-5 w-5" />
@@ -269,7 +281,6 @@ export function Header({ isSticky = true, user }: HeaderProps) {
                   className="hover:opacity-80 transition-opacity py-2 border-b border-primary-foreground/20 flex items-center gap-2"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <Bell className="h-4 w-4" />
                   {t("notifications")}
                 </a>
                 <a
@@ -277,7 +288,6 @@ export function Header({ isSticky = true, user }: HeaderProps) {
                   className="hover:opacity-80 transition-opacity py-2 border-b border-primary-foreground/20 flex items-center gap-2"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <HelpCircle className="h-4 w-4" />
                   {t("support")}
                 </a>
               </div>

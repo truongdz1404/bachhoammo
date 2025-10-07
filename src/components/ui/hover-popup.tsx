@@ -35,9 +35,9 @@ export function HoverPopup({
           )}
         >
           <div
-            className={`${width} max-w-[calc(100vw-2rem)] bg-primary-foreground text-foreground shadow-lg relative`}
+            className={`${width} max-w-[calc(100vw-2rem)] text-foreground shadow-lg relative`}
           >
-            <div className="relative z-10 bg-primary-foreground">
+            <div className="relative z-10 bg-primary-foreground rounded-md">
               {children}
             </div>
           </div>
