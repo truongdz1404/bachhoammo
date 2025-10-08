@@ -33,6 +33,35 @@
         "back": "Quay lại",
         "next": "Tiếp theo",
         "finish": "Hoàn thành"
+      },
+      "shopInfo": {
+        "shopName": "Tên Shop",
+        "shopNamePlaceholder": "Bac_khoai_to",
+        "description": "Mô tả",
+        "descriptionPlaceholder": "Nhập mô tả về shop của bạn",
+        "fullName": "Họ và tên",
+        "phoneNumber": "Số điện thoại",
+        "email": "Email",
+        "emailPlaceholder": "truonglan342@gmail.com",
+        "phonePrefix": "+84",
+        "edit": "Chỉnh sửa",
+        "required": "Bắt buộc"
+      },
+      "ekyc": {
+        "alert": "Vui lòng cung cấp Thông Tin Định Danh của Chủ Shop (nếu cá nhân), hoặc Người Đại Diện Pháp Lý trên đăng ký kinh doanh.",
+        "idNumber": "Số CCCD",
+        "idNumberPlaceholder": "Nhập vào",
+        "fullName": "Họ & Tên",
+        "fullNamePlaceholder": "Nhập vào",
+        "fullNameNote": "Theo thông tin trong CCCD",
+        "frontImage": "Hình chụp của thẻ CCCD của bạn",
+        "backImage": "Hình đang cầm CMND/CCCD của bạn",
+        "frontImageDescription": "Vui lòng cung cấp hình chụp của thẻ CCCD của bạn",
+        "backImageDescription": "Vui lòng cung cấp hình bạn cầm thẻ CCCD, như thế này",
+        "imageRequirement": "Các thông tin trong CCCD phải được hiển thị rõ ràng (Kích thước ảnh không vượt quá 5.0 MB)",
+        "backImageRequirement": "Các thông tin trong CCCD và ảnh của bạn phải được hiển thị rõ ràng (Kích thước ảnh không vượt quá 5.0 MB)",
+        "note": "Tôi xác nhận lại có đủ tiêu chí để cung cấp là chính xác và trung thực",
+        "noteDescription": "Tôi đã đọc và đồng ý với Chính sách Bảo Mật của Shopee."
       }
     }
   }

@@ -18,7 +18,7 @@ export function ProgressStepper({ steps, currentStep }: ProgressStepperProps) {
   };
 
   return (
-    <div className="w-full border-b py-8">
+    <div className="w-full py-8">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between relative">
           {steps.map((step, index) => {

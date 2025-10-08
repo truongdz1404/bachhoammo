@@ -21,7 +21,7 @@
     "logout": "Logout"
   },
   "shop": {
-    "shopRegistration": "Register to become a Shop owner",
+    "shopRegistration": "Seller Registration",
     "registration": {
       "steps": {
         "shopInfo": "Shop Information",
@@ -33,6 +33,35 @@
         "back": "Back",
         "next": "Next",
         "finish": "Finish"
+      },
+      "shopInfo": {
+        "shopName": "Shop Name",
+        "shopNamePlaceholder": "Bac_khoai_to",
+        "description": "Description",
+        "descriptionPlaceholder": "Enter description about your shop",
+        "fullName": "Full Name",
+        "phoneNumber": "Phone Number",
+        "email": "Email",
+        "emailPlaceholder": "truonglan342@gmail.com",
+        "phonePrefix": "+84",
+        "edit": "Edit",
+        "required": "Required"
+      },
+      "ekyc": {
+        "alert": "Please provide Identity Information of the Shop Owner (if individual), or Legal Representative on the business registration.",
+        "idNumber": "ID Number",
+        "idNumberPlaceholder": "Enter here",
+        "fullName": "Full Name",
+        "fullNamePlaceholder": "Enter here",
+        "fullNameNote": "According to information in ID card",
+        "frontImage": "Photo of your ID",
+        "backImage": "Photo holding your ID",
+        "frontImageDescription": "Please provide a photo of your ID",
+        "backImageDescription": "Please provide a photo of you holding your ID like this",
+        "imageRequirement": "Information in the ID card must be clearly displayed (Image size should not exceed 5.0 MB)",
+        "backImageRequirement": "Information in the ID card and your photo must be clearly displayed (Image size should not exceed 5.0 MB)",
+        "note": "I confirm that I have sufficient qualifications to provide accurate and truthful information",
+        "noteDescription": "I have read and agree to Shopee's Privacy Policy."
       }
     }
   }

@@ -39,7 +39,7 @@ const DefaultHeader = ({ user }: HeaderProps) => {
               </span>
             </span>
           </Link>
-          <h2 className="truncate max-w-sm md:max-w-md">{title}</h2>
+          <h2 className="truncate max-w-sm md:max-w-md font-medium">{title}</h2>
         </div>
 
         <div className="flex items-center gap-3 h-full">

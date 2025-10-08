@@ -2,23 +2,29 @@
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
+import { EKYCInfoForm, type EKYCInfoData } from "./_components/ekyc-info-form";
 import { ProgressStepper } from "./_components/progress-stepper";
+import { ShopInfoForm, type ShopInfoData } from "./_components/shop-info-form";
 
 export default function Page() {
   const t = useTranslations("shop");
   const [currentStep, setCurrentStep] = useState(1);
+  const [shopInfoData, setShopInfoData] = useState<ShopInfoData | null>(null);
+  const [ekycInfoData, setEkycInfoData] = useState<EKYCInfoData | null>(null);
 
   const steps = useMemo(
     () => [
       { id: 1, title: t("registration.steps.shopInfo") },
-      { id: 2, title: t("registration.steps.tax") },
-      { id: 3, title: t("registration.steps.identity") },
-      { id: 4, title: t("registration.steps.complete") },
+      // { id: 2, title: t("registration.steps.tax") },
+      { id: 2, title: t("registration.steps.identity") },
+      { id: 3, title: t("registration.steps.complete") },
     ],
     [t]
   );
 
   const handleNext = () => {
+    console.log("Shop Info Data:", shopInfoData);
+    console.log("EKYC Info Data:", ekycInfoData);
     if (currentStep < steps.length) {
       setCurrentStep(currentStep + 1);
     }
@@ -32,35 +38,19 @@ export default function Page() {
 
   return (
     <div className="container mx-auto px-4">
-      <div className="bg-card border border-border mt-4 p-6 rounded-lg shadow-sm overflow-auto">
-        <ProgressStepper steps={steps} currentStep={currentStep} />
+      <div className="bg-card mt-4 p-6 rounded-lg shadow-sm min-w-2xl overflow-auto">
+        <div className="w-full border-b">
+          <div className="max-w-5xl mx-auto ">
+            <ProgressStepper steps={steps} currentStep={currentStep} />
+          </div>
+        </div>
 
-        <div className="min-h-[400px] py-6">
-          {currentStep === 1 && (
-            <div>
-              <h2 className="text-xl font-semibold mb-4 text-card-foreground">
-                {t("registration.steps.shopInfo")}
-              </h2>
-            </div>
-          )}
+        <div className="py-8 max-w-4xl mx-auto">
+          {currentStep === 1 && <ShopInfoForm onDataChange={setShopInfoData} />}
 
-          {currentStep === 2 && (
-            <div>
-              <h2 className="text-xl font-semibold mb-4 text-card-foreground">
-                {t("registration.steps.tax")}
-              </h2>
-            </div>
-          )}
+          {currentStep === 2 && <EKYCInfoForm onDataChange={setEkycInfoData} />}
 
           {currentStep === 3 && (
-            <div>
-              <h2 className="text-xl font-semibold mb-4 text-card-foreground">
-                {t("registration.steps.identity")}
-              </h2>
-            </div>
-          )}
-
-          {currentStep === 4 && (
             <div>
               <h2 className="text-xl font-semibold mb-4 text-card-foreground">
                 {t("registration.steps.complete")}
@@ -79,7 +69,7 @@ export default function Page() {
             {t("registration.navigation.back")}
           </Button>
 
-          {currentStep < steps.length ? (
+          {currentStep < steps.length - 1 ? (
             <Button
               onClick={handleNext}
               className="rounded-md flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm"
