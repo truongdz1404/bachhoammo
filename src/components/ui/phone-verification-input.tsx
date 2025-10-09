@@ -9,6 +9,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useCountdown } from "@/hooks/use-countdown";
+import { useOtp } from "@/hooks/use-otp";
 
 import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -34,11 +35,7 @@ export function PhoneVerificationInput({
   onVerificationStatusChange,
 }: PhoneVerificationInputProps) {
   const t = useTranslations("shop.registration.shopInfo");
-  const [isVerified, setIsVerified] = useState(verified);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isVerifying, setIsVerifying] = useState(false);
-  const [error, setError] = useState("");
   const otpInputRef = useRef<OtpInputRef>(null);
   const {
     remaining,
@@ -47,88 +44,82 @@ export function PhoneVerificationInput({
     reset: resetCountdown,
   } = useCountdown(60);
 
+  // Sử dụng OTP hook
+  const {
+    isLoading,
+    isVerifying,
+    error: otpError,
+    isVerified,
+    send: sendOtpCode,
+    verify: verifyOtpCode,
+    reset: resetOtp,
+    clearError,
+    setVerifiedStatus,
+  } = useOtp({
+    onVerificationSuccess,
+    onVerificationStatusChange,
+  });
+
   useEffect(() => {
-    setIsVerified(verified);
-  }, [verified]);
+    setVerifiedStatus(verified);
+  }, [verified, setVerifiedStatus]);
 
   const handlePhoneChange = (val: string) => {
     if (isVerified) {
-      setIsVerified(false);
-      onVerificationStatusChange?.(false);
+      setVerifiedStatus(false);
     }
     onChange(val);
   };
 
-  const sendOtp = useCallback(
+  const handleSendOtp = useCallback(
     async (phone: string) => {
-      setIsLoading(true);
-      setError("");
-      try {
-        // API thực tế: POST /api/send-otp
-        await new Promise((res) => setTimeout(res, 1200));
-        console.log(`OTP sent to ${phone}`);
+      const success = await sendOtpCode(phone);
+      if (success) {
         startCountdown();
-        return true;
-      } catch {
-        setError(t("phoneVerification.sendError"));
-        return false;
-      } finally {
-        setIsLoading(false);
       }
+      return success;
     },
-    [startCountdown, t]
+    [sendOtpCode, startCountdown]
   );
 
-  const verifyOtp = useCallback(
+  const handleVerifyOtp = useCallback(
     async (phone: string, otp: string) => {
-      setIsVerifying(true);
-      setError("");
-      try {
-        await new Promise((res) => setTimeout(res, 1000));
-        if (otp === "123456") {
-          setIsVerified(true);
-          onVerificationStatusChange?.(true);
-          onVerificationSuccess?.();
-          setIsPopupOpen(false);
-        } else {
-          throw new Error("Invalid OTP");
-        }
-      } catch {
-        setError(t("phoneVerification.verifyError"));
+      const success = await verifyOtpCode(phone, otp);
+      if (success) {
+        setIsPopupOpen(false);
+      } else {
         otpInputRef.current?.clear();
-      } finally {
-        setIsVerifying(false);
       }
+      return success;
     },
-    [t, onVerificationStatusChange, onVerificationSuccess]
+    [verifyOtpCode]
   );
 
   const handleVerifyClick = async () => {
     if (!isPopupOpen && !isRunning) {
-      const success = await sendOtp(value);
+      const success = await handleSendOtp(value);
       if (success) setIsPopupOpen(true);
     } else {
       setIsPopupOpen(true);
     }
   };
 
-  const handleOtpComplete = (otp: string) => verifyOtp(value, otp);
+  const handleOtpComplete = (otp: string) => handleVerifyOtp(value, otp);
 
   const handleResendOtp = async () => {
     if (isRunning || isLoading || isVerifying) return;
     otpInputRef.current?.clear();
-    setError("");
-    const success = await sendOtp(value);
+    clearError();
+    const success = await handleSendOtp(value);
     if (!success) resetCountdown();
   };
 
   const handleClose = () => {
     setIsPopupOpen(false);
-    setError("");
+    clearError();
     resetCountdown();
     otpInputRef.current?.clear();
-    setIsLoading(false);
-    setIsVerifying(false);
+    resetOtp();
   };
 
   const formattedPhone =
@@ -215,7 +206,9 @@ export function PhoneVerificationInput({
                 className="justify-center mb-2"
               />
 
-              {error && <p className="text-sm text-destructive">{error}</p>}
+              {otpError && (
+                <p className="text-sm text-destructive">{t(otpError)}</p>
+              )}
             </div>
 
             <div className="flex flex-col gap-2">

@@ -1,4 +1,22 @@
 {
+  "exception": {
+    "DuplicateIdentificationException": "Identification information has been used.",
+    "EkycValidationException": "Identification information is invalid.",
+    "InvalidShopStateException": "Shop status is invalid.",
+    "OtpExpiredException": "Verification code has expired. Please resend.",
+    "OtpInvalidException": "Verification code is incorrect. Please try again.",
+    "OtpNotFoundException": "Verification code not found.",
+    "OtpSendFailedException": "Unable to send verification code. Please try again.",
+    "PhoneAlreadyRegisteredException": "Phone number has been registered.",
+    "PhoneNotVerifiedException": "Phone number has not been verified.",
+    "ShopNotFoundException": "Shop not found.",
+
+    "503": "Service is currently unavailable. Please try again later.",
+    "500": "An error occurred. Please try again later.",
+    "404": "Resource not found.",
+    "403": "You do not have permission to access this resource.",
+    "400": "Invalid request."
+  },
   "header": {
     "sellerChannel": "Seller Centre",
     "becomeSeller": "Become a Seller",
@@ -57,6 +75,18 @@
           "notReceived": "Didn't receive the code? Check your messages or try resending.",
           "sendError": "Unable to send verification code.",
           "verifyError": "Verification code is incorrect."
+        },
+        "otp": {
+          "sendError": "Unable to send verification code. Please try again.",
+          "verifyError": "Verification code is incorrect. Please try again.",
+          "networkError": "Network error. Please check your internet connection.",
+          "phoneRequired": "Please enter phone number.",
+          "phoneInvalid": "Phone number is invalid.",
+          "otpRequired": "Please enter verification code.",
+          "otpInvalid": "Verification code must have 6 digits.",
+          "tooManyAttempts": "Too many requests. Please try again later.",
+          "phoneAlreadyExists": "Phone number already exists.",
+          "otpExpired": "Verification code has expired. Please resend."
         }
       },
       "ekyc": {
