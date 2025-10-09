@@ -45,7 +45,19 @@
         "emailPlaceholder": "truonglan342@gmail.com",
         "phonePrefix": "+84",
         "edit": "Edit",
-        "required": "Required"
+        "required": "Required",
+        "phoneVerification": {
+          "verified": "Verified",
+          "verify": "Verify",
+          "title": "Phone Number Verification",
+          "sending": "Verify",
+          "codeSent": "Verification code has been sent to phone number",
+          "enterCode": "Please enter the 6-digit verification code:",
+          "resendCode": "Resend Code",
+          "notReceived": "Didn't receive the code? Check your messages or try resending.",
+          "sendError": "Unable to send verification code.",
+          "verifyError": "Verification code is incorrect."
+        }
       },
       "ekyc": {
         "alert": "Please provide Identity Information of the Shop Owner (if individual), or Legal Representative on the business registration.",
@@ -54,12 +66,14 @@
         "fullName": "Full Name",
         "fullNamePlaceholder": "Enter here",
         "fullNameNote": "According to information in ID card",
-        "frontImage": "Photo of your ID",
-        "backImage": "Photo holding your ID",
-        "frontImageDescription": "Please provide a photo of your ID",
-        "backImageDescription": "Please provide a photo of you holding your ID like this",
+        "frontImage": "Photo of your ID (Front)",
+        "backImage": "Photo of your ID (Back)",
+        "selfieImage": "Photo holding your ID",
+        "frontImageDescription": "Please provide a photo of the front side of your ID",
+        "backImageDescription": "Please provide a photo of the back side of your ID",
+        "selfieImageDescription": "Please provide a photo of you holding your ID like this",
         "imageRequirement": "Information in the ID card must be clearly displayed (Image size should not exceed 5.0 MB)",
-        "backImageRequirement": "Information in the ID card and your photo must be clearly displayed (Image size should not exceed 5.0 MB)",
+        "selfieImageRequirement": "Information in the ID card and your photo must be clearly displayed (Image size should not exceed 5.0 MB)",
         "note": "I confirm that I have sufficient qualifications to provide accurate and truthful information",
         "noteDescription": "I have read and agree to Shopee's Privacy Policy."
       }

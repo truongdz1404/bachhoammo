@@ -45,7 +45,19 @@
         "emailPlaceholder": "truonglan342@gmail.com",
         "phonePrefix": "+84",
         "edit": "Chỉnh sửa",
-        "required": "Bắt buộc"
+        "required": "Bắt buộc",
+        "phoneVerification": {
+          "verified": "Đã xác minh",
+          "verify": "Xác minh",
+          "title": "Xác minh số điện thoại",
+          "sending": "Xác minh",
+          "codeSent": "Mã xác minh đã được gửi đến số điện thoại",
+          "enterCode": "Vui lòng nhập 6 số mã xác minh:",
+          "resendCode": "Gửi lại mã",
+          "notReceived": "Không nhận được mã? Kiểm tra tin nhắn hoặc thử gửi lại.",
+          "sendError": "Không thể gửi mã xác minh.",
+          "verifyError": "Mã xác minh không đúng."
+        }
       },
       "ekyc": {
         "alert": "Vui lòng cung cấp Thông Tin Định Danh của Chủ Shop (nếu cá nhân), hoặc Người Đại Diện Pháp Lý trên đăng ký kinh doanh.",
@@ -54,12 +66,14 @@
         "fullName": "Họ & Tên",
         "fullNamePlaceholder": "Nhập vào",
         "fullNameNote": "Theo thông tin trong CCCD",
-        "frontImage": "Hình chụp của thẻ CCCD của bạn",
-        "backImage": "Hình đang cầm CMND/CCCD của bạn",
-        "frontImageDescription": "Vui lòng cung cấp hình chụp của thẻ CCCD của bạn",
-        "backImageDescription": "Vui lòng cung cấp hình bạn cầm thẻ CCCD, như thế này",
+        "frontImage": "Hình chụp mặt trước CCCD",
+        "backImage": "Hình chụp mặt sau CCCD",
+        "selfieImage": "Hình đang cầm CMND/CCCD của bạn",
+        "frontImageDescription": "Vui lòng cung cấp hình chụp mặt trước của thẻ CCCD",
+        "backImageDescription": "Vui lòng cung cấp hình chụp mặt sau của thẻ CCCD",
+        "selfieImageDescription": "Vui lòng cung cấp hình bạn cầm thẻ CCCD, như thế này",
         "imageRequirement": "Các thông tin trong CCCD phải được hiển thị rõ ràng (Kích thước ảnh không vượt quá 5.0 MB)",
-        "backImageRequirement": "Các thông tin trong CCCD và ảnh của bạn phải được hiển thị rõ ràng (Kích thước ảnh không vượt quá 5.0 MB)",
+        "selfieImageRequirement": "Các thông tin trong CCCD và ảnh của bạn phải được hiển thị rõ ràng (Kích thước ảnh không vượt quá 5.0 MB)",
         "note": "Tôi xác nhận lại có đủ tiêu chí để cung cấp là chính xác và trung thực",
         "noteDescription": "Tôi đã đọc và đồng ý với Chính sách Bảo Mật của Shopee."
       }

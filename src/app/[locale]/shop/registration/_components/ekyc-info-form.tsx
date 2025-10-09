@@ -18,6 +18,7 @@ export interface EKYCInfoData {
   fullName: string;
   frontImage: File | null;
   backImage: File | null;
+  selfieImage: File | null;
 }
 
 export function EKYCInfoForm({ onDataChange }: EKYCInfoFormProps) {
@@ -28,6 +29,7 @@ export function EKYCInfoForm({ onDataChange }: EKYCInfoFormProps) {
     fullName: "",
     frontImage: null,
     backImage: null,
+    selfieImage: null,
   });
 
   const handleInputChange = (
@@ -141,6 +143,30 @@ export function EKYCInfoForm({ onDataChange }: EKYCInfoFormProps) {
                 handleInputChange("backImage", file)
               }
             />
+            <Image src="/back-id.svg" alt="id icon" width={120} height={120} />
+          </div>
+          <p className="text-xs text-muted-foreground/60 mt-2">
+            {t("backImageDescription")} <br />
+            {t("imageRequirement")}
+          </p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-12 gap-4 items-start">
+        <div className="col-span-3 flex items-start justify-end pt-2">
+          <Label className="text-sm font-medium flex items-center gap-1">
+            <span className="text-red-500">*</span>
+            {t("selfieImage")}
+          </Label>
+        </div>
+        <div className="col-span-9">
+          <div className="flex items-end gap-2">
+            <InputImage
+              label=""
+              onImageChange={(file: File | null) =>
+                handleInputChange("selfieImage", file)
+              }
+            />
             <Image
               src="/selfie_instructions.svg"
               alt="selfie"
@@ -150,8 +176,8 @@ export function EKYCInfoForm({ onDataChange }: EKYCInfoFormProps) {
             />
           </div>
           <p className="text-xs text-muted-foreground/60 mt-2">
-            {t("backImageDescription")} <br />
-            {t("backImageRequirement")}
+            {t("selfieImageDescription")} <br />
+            {t("selfieImageRequirement")}
           </p>
         </div>
       </div>

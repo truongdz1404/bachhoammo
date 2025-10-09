@@ -4,6 +4,7 @@ import { AdvanceInput } from "@/components/ui/advance-input";
 import { AdvanceTextarea } from "@/components/ui/advance-textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PhoneVerificationInput } from "@/components/ui/phone-verification-input";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -25,10 +26,12 @@ export function ShopInfoForm({ onDataChange }: ShopInfoFormProps) {
   const [formData, setFormData] = useState<ShopInfoData>({
     shopName: "Bac_khoai_to",
     fullName: "Ngo Xuan Bac",
-    phoneNumber: "84365811928",
+    phoneNumber: "0365811928",
     email: "truonglan342@gmail.com",
     description: "",
   });
+
+  const [isPhoneVerified, setIsPhoneVerified] = useState(false);
 
   const handleInputChange = (field: keyof ShopInfoData, value: string) => {
     const newData = {
@@ -38,6 +41,14 @@ export function ShopInfoForm({ onDataChange }: ShopInfoFormProps) {
 
     setFormData(newData);
     onDataChange?.(newData);
+  };
+
+  const handlePhoneVerificationSuccess = () => {
+    setIsPhoneVerified(true);
+  };
+
+  const handleVerificationStatusChange = (isVerified: boolean) => {
+    setIsPhoneVerified(isVerified);
   };
 
   return (
@@ -120,18 +131,13 @@ export function ShopInfoForm({ onDataChange }: ShopInfoFormProps) {
           </Label>
         </div>
         <div className="col-span-9 max-w-md">
-          <div className="flex">
-            <div className="flex items-center px-3 py-1.5 border border-r-0 border-border rounded-l-md bg-muted text-sm">
-              {t("phonePrefix")}
-            </div>
-            <Input
-              id="phoneNumber"
-              value={formData.phoneNumber}
-              onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
-              className="rounded-l-none border border-border text-sm"
-              placeholder="365811928"
-            />
-          </div>
+          <PhoneVerificationInput
+            value={formData.phoneNumber}
+            onChange={(value) => handleInputChange("phoneNumber", value)}
+            verified={isPhoneVerified}
+            onVerificationSuccess={handlePhoneVerificationSuccess}
+            onVerificationStatusChange={handleVerificationStatusChange}
+          />
         </div>
       </div>
     </div>
