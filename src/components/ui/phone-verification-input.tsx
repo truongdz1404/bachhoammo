@@ -35,6 +35,7 @@ export function PhoneVerificationInput({
   onVerificationStatusChange,
 }: PhoneVerificationInputProps) {
   const t = useTranslations("shop.registration.shopInfo");
+  const tException = useTranslations("exception");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const otpInputRef = useRef<OtpInputRef>(null);
   const {
@@ -207,7 +208,9 @@ export function PhoneVerificationInput({
               />
 
               {otpError && (
-                <p className="text-sm text-destructive">{t(otpError)}</p>
+                <p className="text-sm text-destructive">
+                  {tException(otpError)}
+                </p>
               )}
             </div>
 
