@@ -53,7 +53,7 @@ export default async function RootLayout({ children, params }: Props) {
       lang={locale}
       className={`${inter.variable} ${roboto_mono.variable} ${staatliches.variable} antialiased`}
     >
-      <body className="bg-[#f5f5f5]">
+      <body className="bg-muted">
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>

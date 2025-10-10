@@ -12,12 +12,11 @@ interface HeaderProps {
 }
 
 const getRouteTitle = (path: string, t: (key: string) => string): string => {
-  switch (path) {
-    case "/shop/registration":
-      return t("shopRegistration");
-    default:
-      return "";
+  if (path.startsWith("/shop/registration")) {
+    return t("shopRegistration");
   }
+
+  return "";
 };
 
 const DefaultHeader = ({ user }: HeaderProps) => {
