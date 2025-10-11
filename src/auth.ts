@@ -1,16 +1,16 @@
 import NextAuth from "next-auth";
 import { JWT } from "next-auth/jwt";
-import Keycloak from "next-auth/providers/keycloak";
+import KeycloakProvider from "next-auth/providers/keycloak";
 
-async function refreshAccessToken(token: JWT): Promise<JWT> {
+async function refresh(token: JWT): Promise<JWT> {
   try {
     const response = await fetch(
-      `${process.env.AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/token`,
+      `${process.env.NEXT_PUBLIC_AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/token`,
       {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({
-          client_id: process.env.AUTH_KEYCLOAK_ID!,
+          client_id: process.env.NEXT_PUBLIC_AUTH_KEYCLOAK_ID!,
           grant_type: "refresh_token",
           refresh_token: token.refreshToken as string,
         }),
@@ -35,7 +35,13 @@ async function refreshAccessToken(token: JWT): Promise<JWT> {
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  providers: [Keycloak],
+  providers: [
+    KeycloakProvider({
+      clientId: process.env.NEXT_PUBLIC_AUTH_KEYCLOAK_ID,
+      issuer: process.env.NEXT_PUBLIC_AUTH_KEYCLOAK_ISSUER,
+    }),
+  ],
+
   callbacks: {
     async jwt({ token, account }) {
       if (account) {
@@ -51,7 +57,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         return token;
       }
 
-      return await refreshAccessToken(token);
+      return await refresh(token);
     },
     async session({ session, token }) {
       if (token) {

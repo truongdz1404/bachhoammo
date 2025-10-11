@@ -3,30 +3,25 @@ interface SignOutProps {
   readonly children: React.ReactNode;
 }
 
-export async function getLogoutUrl(idToken?: string): Promise<string> {
-  const urlParams = new URLSearchParams();
-  urlParams.append("client_id", process.env.AUTH_KEYCLOAK_ID!);
-  urlParams.append(
+export const getLogoutUrl = (idToken?: string) => {
+  const params = new URLSearchParams();
+  params.append("client_id", process.env.NEXT_PUBLIC_AUTH_KEYCLOAK_ID!);
+  params.append(
     "post_logout_redirect_uri",
-    `${process.env.AUTH_URL}/api/auth/signout`
+    `${process.env.NEXT_PUBLIC_AUTH_URL}/api/auth/signout`
   );
   if (idToken) {
-    urlParams.append("id_token_hint", idToken);
+    params.append("id_token_hint", idToken);
   }
   return `${
-    process.env.AUTH_KEYCLOAK_ISSUER
-  }/protocol/openid-connect/logout?${urlParams.toString()}`;
-}
+    process.env.NEXT_PUBLIC_AUTH_KEYCLOAK_ISSUER
+  }/protocol/openid-connect/logout?${params.toString()}`;
+};
 
 export default function SignOut({ className, children }: SignOutProps) {
-  const handleSignOut = async () => {
-    const url = await getLogoutUrl();
-    window.location.href = url;
-  };
-
   return (
-    <button onClick={handleSignOut} className={className}>
+    <a href={getLogoutUrl()} className={className}>
       {children}
-    </button>
+    </a>
   );
 }
