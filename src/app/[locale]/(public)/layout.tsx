@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { Locale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { Header } from "./_components/header";
+import { Header } from "../_components/header";
 
 export default async function Layout({
   children,

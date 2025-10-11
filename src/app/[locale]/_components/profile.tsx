@@ -59,7 +59,7 @@ export function Profile({ className, user, size = "sm" }: ProfileProps) {
       <HoverPopup
         trigger={
           <Link
-            href="#"
+            href="/user/account/profile"
             className="flex items-center justify-center gap-1 h-full hover:bg-transparent hover:opacity-80"
           >
             <Avatar
@@ -70,7 +70,9 @@ export function Profile({ className, user, size = "sm" }: ProfileProps) {
                 {getInitials(user.name)}
               </AvatarFallback>
             </Avatar>
-            <span className={`hidden lg:inline ${sizeClasses.name}`}>
+            <span
+              className={`hidden lg:inline ${sizeClasses.name} max-w-24 truncate`}
+            >
               {user.name}
             </span>
           </Link>
@@ -80,14 +82,14 @@ export function Profile({ className, user, size = "sm" }: ProfileProps) {
       >
         <div className="flex flex-col">
           <Link
-            href="#"
+            href="/user/account/profile"
             className="w-full justify-start gap-3 px-4 py-2 h-auto font-normal hover:text-primary"
           >
             <span className="text-sm">{t("myAccount")}</span>
           </Link>
 
           <Link
-            href="#"
+            href="/user/purchase"
             className="w-full justify-start gap-3 px-4 py-2 h-auto font-normal hover:text-primary"
           >
             <span className="text-sm">{t("myPurchase")}</span>

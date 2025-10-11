@@ -1,7 +1,7 @@
 "use client";
 
-import { Notification } from "@/app/[locale]/(public)/_components/notification";
-import { Profile } from "@/app/[locale]/(public)/_components/profile";
+import { Notification } from "@/app/[locale]/_components/notification";
+import { Profile } from "@/app/[locale]/_components/profile";
 import Register from "@/components/auth/register";
 import SignIn from "@/components/auth/signin";
 import { Logo } from "@/components/logo";
