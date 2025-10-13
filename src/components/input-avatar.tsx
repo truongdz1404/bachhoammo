@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRef, useState } from "react";
 
-interface ProfileImageInputProps {
+interface Props {
   value?: string;
   onChange?: (file: File | null) => void;
   maxSizeMB?: number;
@@ -11,13 +11,13 @@ interface ProfileImageInputProps {
   className?: string;
 }
 
-export function ProfileImageInput({
+export function InputAvatar({
   value,
   onChange,
   maxSizeMB = 1,
   allowedExtensions = [".JPEG", ".PNG"],
   className = "",
-}: ProfileImageInputProps) {
+}: Props) {
   const [preview, setPreview] = useState<string | null>(value || null);
   const [error, setError] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);

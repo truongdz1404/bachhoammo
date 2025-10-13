@@ -1,6 +1,6 @@
 "use client";
 
-import { ProfileImageInput } from "@/components/profile-image-input";
+import { InputAvatar } from "@/components/input-avatar";
 import { AdvanceInput } from "@/components/ui/advance-input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -103,7 +103,7 @@ export default function Page() {
         </div>
 
         <div className="border-l">
-          <ProfileImageInput
+          <InputAvatar
             onChange={handleImageChange}
             maxSizeMB={1}
             allowedExtensions={[".JPEG", ".PNG"]}
