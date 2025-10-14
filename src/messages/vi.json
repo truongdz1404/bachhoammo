@@ -96,5 +96,68 @@
         "noteDescription": "Tôi đã đọc và đồng ý với Chính sách Bảo Mật của Shopee."
       }
     }
+  },
+  "payment": {
+    "deposit": {
+      "depositInfo": {
+        "title": "Nạp tiền vào ví",
+        "description": "Nạp tiền vào ví để thanh toán đơn hàng nhanh chóng và tiện lợi hơn.",
+        "amountLabel": "Số tiền nạp",
+        "amountPlaceholder": "Nhập số tiền bạn muốn nạp",
+        "amountError": "Số tiền nạp tối thiểu là 50,000 VND",
+        "proceedButton": "Tạo mã QR thanh toán",
+        "feeLabel": "Phí giao dịch",
+        "feeValue": "Miễn phí",
+        "totalLabel": "Tổng cộng",
+        "loadingButton": "Đang tạo mã QR...",
+        "createLinkError": "Tạo link thanh toán thất bại"
+      },
+      "depositMethod": {
+        "qrNotFound": "Chưa có mã QR",
+        "qrNote": "Nhập số tiền và nhấn \"Tạo mã QR thanh toán\" để hiển thị mã QR ở đây",
+        "title": "Thông tin thanh toán",
+        "description": "Quét mã QR hoặc chuyển khoản thủ công",
+        "qrOption": "Quét mã QR",
+        "transferOption": "Chuyển khoản",
+        "accountName": "Chủ tài khoản",
+        "accountNumber": "Số tài khoản",
+        "bankName": "Ngân hàng",
+        "amount": "Số tiền",
+        "transferContent": "Nội dung chuyển khoản",
+        "copyButton": "Sao chép",
+        "copiedButton": "Đã sao chép",
+        "note1": "Lưu ý: Nhập chính xác số tiền",
+        "note2": "khi chuyển khoản."
+      },
+      "note": {
+        "important": "Lưu ý quan trọng:",
+        "note1": "Vui lòng hoàn tất thanh toán trong vòng 15 phút.",
+        "note2": "Sau khi thanh toán xong, bạn sẽ được tự động chuyển về trang kết quả",
+        "note3": "Số tiền sẽ được cộng vào ví của bạn ngay sau khi giao dịch thành công.",
+        "note4": "Nếu có bất kỳ thắc mắc nào, vui lòng liên hệ bộ phận Chăm sóc Khách hàng của chúng tôi."
+      },
+      "success": {
+        "titleSuccess": "Thanh toán thành công!",
+        "titlePending": "Thanh toán đang xử lý",
+        "titleFailed": "Thanh toán không thành công",
+        "successMessage": "Giao dịch của bạn đã được xử lý thành công.",
+        "pendingMessage": "Giao dịch của bạn đang được xử lý. Vui lòng chờ trong giây lát.",
+        "checking": "Đang kiểm tra trạng thái thanh toán...",
+        "noInfo": "Không tìm thấy thông tin giao dịch. Vui lòng thử lại hoặc liên hệ hỗ trợ.",
+        "orderNotFound": "Không tìm thấy mã đơn hàng để kiểm tra trạng thái.",
+        "verifyFailed": "Không thể xác minh trạng thái thanh toán",
+        "checkFailed": "Lỗi khi kiểm tra trạng thái thanh toán",
+        "detailsTitle": "Chi tiết giao dịch",
+        "orderCode": "Mã đơn hàng",
+        "amount": "Số tiền",
+        "description": "Nội dung",
+        "status": "Trạng thái",
+        "paid": "Đã thanh toán",
+        "pending": "Đang xử lý",
+        "cancelled": "Đã hủy",
+        "createNew": "Tạo giao dịch mới",
+        "goHome": "Về trang chủ"
+      }
+    }
   }
 }

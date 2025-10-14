@@ -108,5 +108,68 @@
         "noteDescription": "I have read and agree to Shopee's Privacy Policy."
       }
     }
+  },
+  "payment": {
+    "deposit": {
+      "depositInfo": {
+        "title": "Deposit to Wallet",
+        "description": "Add funds to your wallet for faster and more convenient order payments.",
+        "amountLabel": "Deposit Amount",
+        "amountPlaceholder": "Enter the amount you want to deposit",
+        "amountError": "The minimum deposit amount is 50,000 VND",
+        "proceedButton": "Generate QR Payment Code",
+        "feeLabel": "Transaction Fee",
+        "feeValue": "Free",
+        "totalLabel": "Total",
+        "loadingButton": "Generating QR Code...",
+        "createLinkError": "Unable to generate payment link"
+      },
+      "depositMethod": {
+        "qrNotFound": "QR code not available",
+        "qrNote": "Enter the amount and click \"Generate QR Payment Code\" to display the QR code here",
+        "title": "Payment Information",
+        "description": "Scan the QR code or transfer manually",
+        "qrOption": "Scan QR Code",
+        "transferOption": "Bank Transfer",
+        "accountName": "Account Name",
+        "accountNumber": "Account Number",
+        "bankName": "Bank",
+        "amount": "Amount",
+        "transferContent": "Transfer Description",
+        "copyButton": "Copy",
+        "copiedButton": "Copied",
+        "note1": "Note: Enter the exact amount",
+        "note2": "when making the transfer."
+      },
+      "note": {
+        "important": "Important Notes:",
+        "note1": "Please complete the payment within 15 minutes.",
+        "note2": "After successful payment, you will be automatically redirected to the result page.",
+        "note3": "The deposited amount will be added to your wallet immediately after a successful transaction.",
+        "note4": "If you have any questions, please contact our Customer Support team."
+      },
+      "success": {
+        "titleSuccess": "Payment Successful!",
+        "titlePending": "Payment Pending",
+        "titleFailed": "Payment Failed",
+        "successMessage": "Your transaction has been processed successfully.",
+        "pendingMessage": "Your payment is being processed. Please wait a moment.",
+        "checking": "Checking payment status...",
+        "noInfo": "Transaction information not found. Please try again or contact support.",
+        "orderNotFound": "Order code not found to check status.",
+        "verifyFailed": "Unable to verify payment status",
+        "checkFailed": "Error checking payment status",
+        "detailsTitle": "Transaction Details",
+        "orderCode": "Order Code",
+        "amount": "Amount",
+        "description": "Description",
+        "status": "Status",
+        "paid": "Paid",
+        "pending": "Pending",
+        "cancelled": "Cancelled",
+        "createNew": "Create New Transaction",
+        "goHome": "Go to Home"
+      }
+    }
   }
 }
