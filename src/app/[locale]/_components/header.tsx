@@ -16,7 +16,7 @@ import {
   Search,
   X,
 } from "lucide-react";
-import { User } from "next-auth";
+import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useState } from "react";
@@ -32,10 +32,10 @@ const SEARCH_SUGGESTIONS = [
 
 interface HeaderProps {
   isSticky?: boolean;
-  user?: User;
 }
 
-export function Header({ isSticky = true, user }: HeaderProps) {
+export function Header({ isSticky = true }: HeaderProps) {
+  const { data: session } = useSession();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
@@ -92,11 +92,8 @@ export function Header({ isSticky = true, user }: HeaderProps) {
             </a>
             <LanguageSwitcher className="hidden md:flex h-full items-center z-10" />
 
-            {user ? (
-              <Profile
-                className="hidden md:flex h-full items-center z-10"
-                user={user}
-              />
+            {session ? (
+              <Profile className="hidden md:flex h-full items-center z-10" />
             ) : (
               <div className="flex items-center gap-1 h-full">
                 <Register className="hover:opacity-80 transition-opacity h-full flex items-center">

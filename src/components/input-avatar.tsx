@@ -1,7 +1,8 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Props {
   value?: string;
@@ -9,6 +10,7 @@ interface Props {
   maxSizeMB?: number;
   allowedExtensions?: string[];
   className?: string;
+  disabled?: boolean;
 }
 
 export function InputAvatar({
@@ -17,24 +19,34 @@ export function InputAvatar({
   maxSizeMB = 1,
   allowedExtensions = [".JPEG", ".PNG"],
   className = "",
+  disabled = false,
 }: Props) {
+  const t = useTranslations("inputAvatar");
   const [preview, setPreview] = useState<string | null>(value || null);
   const [error, setError] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
-
+  useEffect(() => {
+    setPreview(value || null);
+  }, [value]);
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (disabled) return;
+
     const file = event.target.files?.[0];
     if (!file) return;
 
     const fileSizeMB = file.size / (1024 * 1024);
     if (fileSizeMB > maxSizeMB) {
-      setError(`File size must be less than ${maxSizeMB}MB`);
+      setError(t("fileSizeError", { maxSize: maxSizeMB }));
       return;
     }
 
     const fileExtension = "." + file.name.split(".").pop()?.toUpperCase();
     if (!allowedExtensions.includes(fileExtension)) {
-      setError(`Only ${allowedExtensions.join(", ")} files are allowed`);
+      setError(
+        t("fileExtensionError", {
+          extensions: allowedExtensions.join(", "),
+        })
+      );
       return;
     }
 
@@ -51,15 +63,20 @@ export function InputAvatar({
   };
 
   const handleSelectClick = () => {
+    if (disabled) return;
     fileInputRef.current?.click();
   };
 
   return (
-    <div className={`flex flex-col items-center space-y-4 ${className}`}>
+    <div
+      className={`flex flex-col items-center space-y-4 ${className} ${
+        disabled ? "opacity-50 pointer-events-none" : ""
+      }`}
+    >
       <div
         className="size-24 rounded-full flex items-center justify-center overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
         onClick={handleSelectClick}
-        title="Click to select image"
+        title={t("clickToSelect")}
       >
         {preview ? (
           <Image
@@ -68,6 +85,7 @@ export function InputAvatar({
             width={96}
             height={96}
             className="w-full h-full object-cover"
+            priority
           />
         ) : (
           <div className="w-full h-full bg-muted rounded-full flex items-center justify-center">
@@ -83,10 +101,14 @@ export function InputAvatar({
       </div>
 
       <button
+        type="button"
         onClick={handleSelectClick}
-        className="text-sm hover:bg-muted text-foreground transition-colors border border-border px-4 py-2 rounded-md"
+        disabled={disabled}
+        className={`text-sm hover:bg-muted text-foreground transition-colors border border-border px-4 py-2 rounded-md ${
+          disabled ? "cursor-not-allowed" : ""
+        }`}
       >
-        Select Image
+        {t("selectImage")}
       </button>
 
       <input
@@ -94,16 +116,19 @@ export function InputAvatar({
         type="file"
         accept={allowedExtensions.map((ext) => ext.toLowerCase()).join(",")}
         onChange={handleFileSelect}
+        disabled={disabled}
         className="hidden"
       />
 
-      <div className="text-sm text-muted-foreground/80">
-        <div>File size: maximum {maxSizeMB} MB</div>
-        <div>File extension: {allowedExtensions.join(", ")}</div>
+      <div className="text-xs text-muted-foreground/80">
+        <div>{t("fileSize", { maxSize: maxSizeMB })}</div>
+        <div>
+          {t("fileExtension", { extensions: allowedExtensions.join(", ") })}
+        </div>
       </div>
 
       {error && (
-        <div className="text-center text-xs text-red-500 bg-red-50 px-3 py-1 rounded">
+        <div className="text-center text-xs text-destructive px-3 py-1 rounded">
           {error}
         </div>
       )}

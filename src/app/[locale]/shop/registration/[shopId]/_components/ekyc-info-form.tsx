@@ -11,6 +11,12 @@ import { useState } from "react";
 
 interface EKYCInfoFormProps {
   onDataChange?: (data: EKYCInfoData) => void;
+  initialData?: EKYCInfoData & {
+    frontImageUrl?: string;
+    backImageUrl?: string;
+    selfieImageUrl?: string;
+  };
+  shopId: string;
 }
 
 export interface EKYCInfoData {
@@ -21,16 +27,16 @@ export interface EKYCInfoData {
   selfieImage: File | null;
 }
 
-export function EKYCInfoForm({ onDataChange }: EKYCInfoFormProps) {
+export function EKYCInfoForm({ onDataChange, initialData }: EKYCInfoFormProps) {
   const t = useTranslations("shop.registration.ekyc");
 
-  const [formData, setFormData] = useState<EKYCInfoData>({
-    idNumber: "",
-    fullName: "",
-    frontImage: null,
-    backImage: null,
-    selfieImage: null,
-  });
+  const [formData, setFormData] = useState<EKYCInfoData>(() => ({
+    idNumber: initialData?.idNumber || "",
+    fullName: initialData?.fullName || "",
+    frontImage: initialData?.frontImage || null,
+    backImage: initialData?.backImage || null,
+    selfieImage: initialData?.selfieImage || null,
+  }));
 
   const handleInputChange = (
     field: keyof EKYCInfoData,
@@ -114,6 +120,7 @@ export function EKYCInfoForm({ onDataChange }: EKYCInfoFormProps) {
           <div className="flex items-end gap-2">
             <InputImage
               label=""
+              initialImageUrl={initialData?.frontImageUrl}
               onImageChange={(file: File | null) =>
                 handleInputChange("frontImage", file)
               }
@@ -139,6 +146,7 @@ export function EKYCInfoForm({ onDataChange }: EKYCInfoFormProps) {
           <div className="flex items-end gap-2">
             <InputImage
               label=""
+              initialImageUrl={initialData?.backImageUrl}
               onImageChange={(file: File | null) =>
                 handleInputChange("backImage", file)
               }
@@ -163,6 +171,7 @@ export function EKYCInfoForm({ onDataChange }: EKYCInfoFormProps) {
           <div className="flex items-end gap-2">
             <InputImage
               label=""
+              initialImageUrl={initialData?.selfieImageUrl}
               onImageChange={(file: File | null) =>
                 handleInputChange("selfieImage", file)
               }

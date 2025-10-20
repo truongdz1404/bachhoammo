@@ -1,4 +1,4 @@
-import { apiClient, parseJson } from "./api-client";
+import { apiClient, parseJson, postInit } from "./api-client";
 
 export interface OtpRequestDto {
   phone: string;
@@ -20,26 +20,15 @@ export interface OtpVerificationResponseDto {
   isVerified: boolean;
 }
 
-export const sendOtp = async (request: OtpRequestDto) => {
-  const response = await apiClient("/api/v1/otp/send", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(request),
-  });
+export const otpApi = {
+  send: (request: OtpRequestDto) =>
+    apiClient(`/api/v1/otp/send/${request.phone}`, {
+      ...postInit,
+    }).then((response) => parseJson<OtpResponseDto>(response)),
 
-  return parseJson<OtpResponseDto>(response);
-};
-
-export const verifyOtp = async (request: OtpVerifyDto) => {
-  const response = await apiClient("/api/v1/otp/verify", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(request),
-  });
-
-  return parseJson<OtpVerificationResponseDto>(response);
+  verify: (request: OtpVerifyDto) =>
+    apiClient("/api/v1/otp/verify", {
+      ...postInit,
+      body: JSON.stringify(request),
+    }).then((response) => parseJson<OtpVerificationResponseDto>(response)),
 };

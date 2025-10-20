@@ -13,14 +13,14 @@ interface PageProps {
 
 export default function Page({ params }: PageProps) {
   const t = useTranslations("shop");
-  const { step } = use(params);
+  const { shopId, step } = use(params);
   const currentStep = parseInt(step) || 1;
 
   return (
     <>
-      {currentStep === 1 && <ShopInfoForm />}
+      {currentStep === 1 && <ShopInfoForm shopId={shopId} />}
 
-      {currentStep === 2 && <EKYCInfoForm />}
+      {currentStep === 2 && <EKYCInfoForm shopId={shopId} />}
 
       {currentStep === 3 && (
         <div>

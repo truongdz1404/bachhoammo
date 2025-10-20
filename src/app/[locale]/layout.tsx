@@ -1,6 +1,8 @@
 import { routing } from "@/i18n/routing";
+import SWRProvider from "@/lib/swr";
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
+import { SessionProvider } from "next-auth/react";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { Inter, Roboto_Mono, Staatliches } from "next/font/google";
@@ -55,7 +57,9 @@ export default async function RootLayout({ children, params }: Props) {
     >
       <body className="bg-muted">
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <SessionProvider>
+            <SWRProvider>{children}</SWRProvider>
+          </SessionProvider>
         </NextIntlClientProvider>
         <Analytics />
       </body>

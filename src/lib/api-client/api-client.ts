@@ -6,25 +6,41 @@ export const parseJson = async <T>(response: Response): Promise<Result<T>> => {
 
     if (response.ok) {
       return {
-        success: true,
+        ok: true,
         data,
       };
     }
 
     return {
-      success: false,
+      ok: false,
       error: data?.title,
+      detail: data?.detail,
     };
   } catch {
     return {
-      success: false,
+      ok: false,
       error: response.status.toString(),
     };
   }
 };
 
 export interface Result<T> {
-  success: boolean;
+  ok: boolean;
   data?: T;
   error?: string;
+  detail?: string;
 }
+
+export const jsonHeaders = {
+  "Content-Type": "application/json",
+};
+
+export const postInit = {
+  method: "POST",
+  headers: jsonHeaders,
+};
+
+export const patchInit = {
+  method: "PATCH",
+  headers: jsonHeaders,
+};

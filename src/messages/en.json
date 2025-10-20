@@ -38,6 +38,16 @@
     "myPurchase": "My Purchase",
     "logout": "Logout"
   },
+  "sidebar": {
+    "notifications": "Notifications",
+    "orderUpdates": "Order Updates",
+    "systemUpdates": "System Updates",
+    "myAccount": "My Account",
+    "profile": "Profile",
+    "changePassword": "Change Password",
+    "myPurchase": "My Purchase",
+    "editProfile": "Edit Profile"
+  },
   "shop": {
     "shopRegistration": "Seller Registration",
     "registration": {
@@ -54,13 +64,13 @@
       },
       "shopInfo": {
         "shopName": "Shop Name",
-        "shopNamePlaceholder": "Bac_khoai_to",
+        "shopNamePlaceholder": "shop_name",
         "description": "Description",
         "descriptionPlaceholder": "Enter description about your shop",
         "fullName": "Full Name",
         "phoneNumber": "Phone Number",
         "email": "Email",
-        "emailPlaceholder": "truonglan342@gmail.com",
+        "emailPlaceholder": "example@gmail.com",
         "phonePrefix": "+84",
         "edit": "Edit",
         "required": "Required",
@@ -87,7 +97,14 @@
           "tooManyAttempts": "Too many requests. Please try again later.",
           "phoneAlreadyExists": "Phone number already exists.",
           "otpExpired": "Verification code has expired. Please resend."
-        }
+        },
+        "shopNameRequired": "Shop name is required",
+        "shopNameMaxLength": "Shop name must be ≤ 30 characters",
+        "phoneInvalid": "Invalid phone number format",
+        "emailInvalid": "Invalid email",
+        "emailRequired": "Email is required",
+        "phoneRequired": "Phone number is required",
+        "descriptionMaxLength": "Max 200 characters"
       },
       "ekyc": {
         "alert": "Please provide Identity Information of the Shop Owner (if individual), or Legal Representative on the business registration.",
@@ -108,5 +125,26 @@
         "noteDescription": "I have read and agree to Shopee's Privacy Policy."
       }
     }
+  },
+  "user": {
+    "account": {
+      "profile": {
+        "myProfile": "My Profile",
+        "manageAccount": "Manage and protect your account",
+        "username": "Username",
+        "name": "Name",
+        "email": "Email",
+        "change": "Change",
+        "save": "Save"
+      }
+    }
+  },
+  "inputAvatar": {
+    "fileSize": "File size: maximum {maxSize} MB",
+    "fileExtension": "File extension: {extensions}",
+    "selectImage": "Select Image",
+    "clickToSelect": "Click to select image",
+    "fileSizeError": "File size must be less than {maxSize}MB",
+    "fileExtensionError": "Only {extensions} files are allowed"
   }
 }

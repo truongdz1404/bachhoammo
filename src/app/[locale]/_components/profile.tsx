@@ -3,19 +3,22 @@
 import SignOut from "@/components/auth/signout";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { HoverPopup } from "@/components/ui/hover-popup";
+import { useUser } from "@/hooks/use-user";
 import { Link } from "@/i18n/navigation";
-import { User } from "next-auth";
+import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 
 interface ProfileProps {
   className?: string;
-  user?: User;
   size?: "sm" | "md" | "lg";
 }
 
-export function Profile({ className, user, size = "sm" }: ProfileProps) {
+export function Profile({ className, size = "sm" }: ProfileProps) {
   const t = useTranslations("header");
-  if (!user) return null;
+  const session = useSession();
+  const { data: user } = useUser();
+  const username = user?.fullName || session?.data?.user?.name || "No Name";
+  if (!user && !session) return null;
 
   const getInitials = (name: string) => {
     return name
@@ -65,15 +68,19 @@ export function Profile({ className, user, size = "sm" }: ProfileProps) {
             <Avatar
               className={`${sizeClasses.avatar} bg-primary-foreground text-primary`}
             >
-              <AvatarImage src={user.avatar} alt={user.name} />
+              <AvatarImage
+                src={user?.avatarUrl ?? ""}
+                alt={username}
+                className="object-cover size-full"
+              />
               <AvatarFallback className={sizeClasses.fallback}>
-                {getInitials(user.name)}
+                {getInitials(username)}
               </AvatarFallback>
             </Avatar>
             <span
               className={`hidden lg:inline ${sizeClasses.name} max-w-24 truncate`}
             >
-              {user.name}
+              {username}
             </span>
           </Link>
         }

@@ -1,6 +1,7 @@
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useUser } from "@/hooks/use-user";
 import { usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import {
@@ -12,9 +13,10 @@ import {
   ShoppingBag,
   User as UserIcon,
 } from "lucide-react";
-import { User } from "next-auth";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useMemo, useState } from "react";
+import { useTranslations } from "use-intl";
 import { AnimatedCollapse } from "./animated-collapse";
 
 interface SidebarItem {
@@ -29,54 +31,58 @@ interface SidebarItem {
 const sidebarItems: SidebarItem[] = [
   {
     icon: Bell,
-    label: "Notifications",
+    label: "notifications",
     href: "",
     children: [
       {
         icon: Flag,
-        label: "Order Updates",
+        label: "orderUpdates",
         href: "/user/notifications/order",
       },
       {
         icon: OctagonAlert,
-        label: "System Updates",
+        label: "systemUpdates",
         href: "/user/notifications/system",
       },
     ],
   },
   {
     icon: UserIcon,
-    label: "My Account",
+    label: "myAccount",
     href: "",
     children: [
       {
         icon: Edit,
-        label: "Profile",
+        label: "profile",
         href: "/user/account/profile",
       },
       {
         icon: Lock,
-        label: "Change Password",
+        label: "changePassword",
         href: "/user/account/change-password",
       },
     ],
   },
   {
     icon: ShoppingBag,
-    label: "My Purchase",
+    label: "myPurchase",
     href: "/user/purchase",
   },
 ];
 
 interface SidebarProps {
   className?: string;
-  user?: User;
 }
 
-const Sidebar = ({ className, user }: SidebarProps) => {
+const Sidebar = ({ className }: SidebarProps) => {
   const pathname = usePathname();
+  const t = useTranslations("sidebar");
+  const { data: user } = useUser();
+  const { data: session } = useSession();
+
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
+  const username = user?.fullName || session?.user?.name || "No Name";
   const isExpanded = (label: string) => {
     return expandedItems.includes(label);
   };
@@ -143,20 +149,24 @@ const Sidebar = ({ className, user }: SidebarProps) => {
     <div className={cn("text-sm w-48", className)}>
       <div className="border-b border-border pb-4">
         <div className="flex items-center space-x-3">
-          <Avatar className="size-10 bg-primary-foreground text-primary">
-            <AvatarImage src={user.avatar} alt={user.name} />
+          <Avatar className="w-10 h-10 bg-primary-foreground text-primary">
+            <AvatarImage
+              src={user?.avatarUrl ?? ""}
+              alt={username}
+              className="object-cover w-full h-full"
+            />
             <AvatarFallback className="text-sm bg-background">
-              {getInitials(user.name)}
+              {getInitials(username)}
             </AvatarFallback>
           </Avatar>
           <div className="flex-1 truncate">
-            <span className="text-sm font-medium">{user.name}</span>
+            <span className="text-sm font-medium">{username}</span>
             <Link
               href="/user/account/profile"
-              className="flex items-center gap-2 text-sm text-foreground/80"
+              className="flex items-center gap-2 text-sm text-foreground/80 capitalize"
             >
               <Edit className="size-3" />
-              Edit Profile
+              {t("editProfile")}
             </Link>
           </div>
         </div>
@@ -192,6 +202,7 @@ interface SidebarItemProps {
 }
 
 const SidebarItem = ({ item, isChild = false, onToggle }: SidebarItemProps) => {
+  const t = useTranslations("sidebar");
   const Icon = item.icon;
   const hasChildren = item.children && item.children.length > 0;
 
@@ -225,8 +236,8 @@ const SidebarItem = ({ item, isChild = false, onToggle }: SidebarItemProps) => {
               isChild && "size-3"
             )}
           />
-          <span className="flex-1 transition-all duration-200">
-            {item.label}
+          <span className="flex-1 transition-all duration-200 capitalize">
+            {t(item.label)}
           </span>
         </div>
       </div>

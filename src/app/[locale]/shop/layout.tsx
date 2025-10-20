@@ -1,5 +1,4 @@
-import { auth } from "@/auth";
-import DefaultHeader from "@/components/ui/default-header";
+import DefaultHeader from "@/components/default-header";
 import { Locale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 
@@ -11,11 +10,10 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   const { locale } = await params;
-  const session = await auth();
   setRequestLocale(locale as Locale);
   return (
     <>
-      <DefaultHeader user={session?.user} />
+      <DefaultHeader />
       <main className="bg-muted w-full min-h-screen">{children}</main>
     </>
   );

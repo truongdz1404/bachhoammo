@@ -3,21 +3,24 @@
 import SignOut from "@/components/auth/signout";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { HoverPopup } from "@/components/ui/hover-popup";
+import { useUser } from "@/hooks/use-user";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { ChevronDown, LogOut } from "lucide-react";
-import { User } from "next-auth";
+import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 
 interface ProfileProps {
   className?: string;
-  user?: User;
   size?: "sm" | "lg";
 }
 
-export function DefaultProfile({ className, user, size = "sm" }: ProfileProps) {
+export function DefaultProfile({ className, size = "sm" }: ProfileProps) {
+  const { data: user } = useUser();
+  const { data: session } = useSession();
+  const username = user?.fullName || session?.user?.name || "No Name";
+
   const t = useTranslations("header");
-  if (!user) return null;
 
   const getInitials = (name: string) => {
     return name
@@ -57,18 +60,19 @@ export function DefaultProfile({ className, user, size = "sm" }: ProfileProps) {
             href="#"
             className="flex items-center justify-center gap-1 h-full hover:bg-muted px-4"
           >
-            <Avatar
-              className={`${sizeClasses.avatar} bg-primary text-primary-foreground`}
-            >
-              <AvatarImage src={user.avatar} alt={user.name} />
+            <Avatar className={`${sizeClasses.avatar} `}>
+              <AvatarImage src={user?.avatarUrl ?? ""} alt={username} />
               <AvatarFallback
-                className={cn(sizeClasses.fallback, "bg-primary")}
+                className={cn(
+                  sizeClasses.fallback,
+                  "bg-primary text-primary-foreground"
+                )}
               >
-                {getInitials(user.name)}
+                {getInitials(username ?? "")}
               </AvatarFallback>
             </Avatar>
             <span className={`hidden lg:inline ${sizeClasses.name}`}>
-              {user.name}
+              {username}
             </span>
             <ChevronDown className="size-4 hidden lg:inline" />
           </Link>
@@ -79,12 +83,12 @@ export function DefaultProfile({ className, user, size = "sm" }: ProfileProps) {
         <div className="flex flex-col px-4 cursor-default">
           <div className="flex flex-col items-center justify-center py-4 gap-2">
             <Avatar className="size-10 bg-primary text-primary-foreground">
-              <AvatarImage src={user.avatar} alt={user.name} />
+              <AvatarImage src={user?.avatarUrl ?? ""} alt={username} />
               <AvatarFallback className={"bg-primary"}>
-                {getInitials(user.name)}
+                {getInitials(username)}
               </AvatarFallback>
             </Avatar>
-            <span className="text-sm">{user.name}</span>
+            <span className="text-sm">{username}</span>
           </div>
 
           <SignOut className="border-t w-full justify-start items-center gap-3 px-4 py-2 h-auto font-normal hover:text-destructive flex">

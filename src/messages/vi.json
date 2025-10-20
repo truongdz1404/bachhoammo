@@ -38,6 +38,16 @@
     "myPurchase": "Đơn Mua",
     "logout": "Đăng Xuất"
   },
+  "sidebar": {
+    "editProfile": "Sửa hồ sơ",
+    "notifications": "Thông báo",
+    "orderUpdates": "Cập nhật đơn hàng",
+    "systemUpdates": "Cập nhật hệ thống",
+    "myAccount": "Tài khoản của tôi",
+    "profile": "Hồ sơ",
+    "changePassword": "Đổi mật khẩu",
+    "myPurchase": "Đơn mua"
+  },
   "shop": {
     "shopRegistration": "Đăng ký trở thành Người bán",
     "registration": {
@@ -54,13 +64,13 @@
       },
       "shopInfo": {
         "shopName": "Tên Shop",
-        "shopNamePlaceholder": "Bac_khoai_to",
+        "shopNamePlaceholder": "shop_name",
         "description": "Mô tả",
         "descriptionPlaceholder": "Nhập mô tả về shop của bạn",
         "fullName": "Họ và tên",
         "phoneNumber": "Số điện thoại",
         "email": "Email",
-        "emailPlaceholder": "truonglan342@gmail.com",
+        "emailPlaceholder": "example@gmail.com",
         "phonePrefix": "+84",
         "edit": "Chỉnh sửa",
         "required": "Bắt buộc",
@@ -75,7 +85,14 @@
           "notReceived": "Không nhận được mã? Kiểm tra tin nhắn hoặc thử gửi lại.",
           "sendError": "Không thể gửi mã xác minh.",
           "verifyError": "Mã xác minh không đúng."
-        }
+        },
+        "shopNameRequired": "Tên shop là bắt buộc",
+        "shopNameMaxLength": "Tên shop phải ≤ 30 ký tự",
+        "phoneInvalid": "Định dạng số điện thoại không hợp lệ",
+        "emailInvalid": "Email không hợp lệ",
+        "emailRequired": "Email là bắt buộc",
+        "phoneRequired": "Số điện thoại là bắt buộc",
+        "descriptionMaxLength": "Tối đa 200 ký tự"
       },
       "ekyc": {
         "alert": "Vui lòng cung cấp Thông Tin Định Danh của Chủ Shop (nếu cá nhân), hoặc Người Đại Diện Pháp Lý trên đăng ký kinh doanh.",
@@ -96,5 +113,26 @@
         "noteDescription": "Tôi đã đọc và đồng ý với Chính sách Bảo Mật của Shopee."
       }
     }
+  },
+  "user": {
+    "account": {
+      "profile": {
+        "myProfile": "Hồ sơ của tôi",
+        "manageAccount": "Quản lý thông tin hồ sơ để bảo mật tài khoản",
+        "username": "Tên đăng nhập",
+        "name": "Tên",
+        "email": "Email",
+        "change": "Thay đổi",
+        "save": "Lưu"
+      }
+    }
+  },
+  "inputAvatar": {
+    "fileSize": "Kích thước tệp: tối đa {maxSize} MB",
+    "fileExtension": "Định dạng tệp: {extensions}",
+    "selectImage": "Chọn ảnh",
+    "clickToSelect": "Nhấn để chọn ảnh",
+    "fileSizeError": "Kích thước tệp phải nhỏ hơn {maxSize}MB",
+    "fileExtensionError": "Chỉ cho phép các tệp {extensions}"
   }
 }

@@ -35,14 +35,18 @@ interface InputImageProps {
   label?: string;
   onImageChange?: (file: File | null) => void;
   className?: string;
+  initialImageUrl?: string;
 }
 
 export default function InputImage({
   label = "Profile Picture",
   onImageChange,
   className,
+  initialImageUrl,
 }: InputImageProps) {
-  const [profilePicture, setProfilePicture] = useState<string | null>(null);
+  const [profilePicture, setProfilePicture] = useState<string | null>(
+    initialImageUrl || null
+  );
 
   const handleFileChange = (file: File | null) => {
     onImageChange?.(file);

@@ -13,26 +13,22 @@ import { useOtp } from "@/hooks/use-otp";
 
 import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 interface PhoneVerificationInputProps {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
   disabled?: boolean;
-  onVerificationSuccess?: () => void;
-  verified?: boolean;
-  onVerificationStatusChange?: (isVerified: boolean) => void;
+  onVerified: (otp: string) => void;
 }
 
 export function PhoneVerificationInput({
   value,
   onChange,
-  placeholder = "0123456789",
+  placeholder = "",
   disabled = false,
-  verified = false,
-  onVerificationSuccess,
-  onVerificationStatusChange,
+  onVerified,
 }: PhoneVerificationInputProps) {
   const t = useTranslations("shop.registration.shopInfo");
   const tException = useTranslations("exception");
@@ -45,7 +41,6 @@ export function PhoneVerificationInput({
     reset: resetCountdown,
   } = useCountdown(60);
 
-  // Sử dụng OTP hook
   const {
     isLoading,
     isVerifying,
@@ -55,22 +50,8 @@ export function PhoneVerificationInput({
     verify: verifyOtpCode,
     reset: resetOtp,
     clearError,
-    setVerifiedStatus,
-  } = useOtp({
-    onVerificationSuccess,
-    onVerificationStatusChange,
-  });
-
-  useEffect(() => {
-    setVerifiedStatus(verified);
-  }, [verified, setVerifiedStatus]);
-
-  const handlePhoneChange = (val: string) => {
-    if (isVerified) {
-      setVerifiedStatus(false);
-    }
-    onChange(val);
-  };
+    setVerifiedOtp,
+  } = useOtp({ onVerified });
 
   const handleSendOtp = useCallback(
     async (phone: string) => {
@@ -87,13 +68,14 @@ export function PhoneVerificationInput({
     async (phone: string, otp: string) => {
       const success = await verifyOtpCode(phone, otp);
       if (success) {
+        setVerifiedOtp(otp);
         setIsPopupOpen(false);
       } else {
         otpInputRef.current?.clear();
       }
       return success;
     },
-    [verifyOtpCode]
+    [setVerifiedOtp, verifyOtpCode]
   );
 
   const handleVerifyClick = async () => {
@@ -125,9 +107,12 @@ export function PhoneVerificationInput({
 
   const formattedPhone =
     value.length > 8 ? `+84 *** *** ${value.slice(-3)}` : value;
+  const phoneRegex = /^0[0-9]{9,10}$/;
+  const isPhoneValid = phoneRegex.test(value);
   const disableInput =
     disabled || isVerified || isPopupOpen || isLoading || isVerifying;
-  const disableVerifyBtn = isPopupOpen || isLoading || isVerifying;
+  const disableVerifyBtn =
+    isPopupOpen || isLoading || isVerifying || !isPhoneValid;
 
   return (
     <div className="flex">
@@ -137,7 +122,7 @@ export function PhoneVerificationInput({
 
       <Input
         value={value}
-        onChange={(e) => handlePhoneChange(e.target.value)}
+        onChange={(e) => onChange(e.target.value.replace(/\D/g, ""))}
         placeholder={placeholder}
         disabled={disableInput}
         className="rounded-l-none border border-border text-sm"
@@ -177,21 +162,21 @@ export function PhoneVerificationInput({
 
           <PopoverContent className="w-80 p-6" align="center">
             <div className="flex justify-between items-center mb-2">
-              <h3 className="text-lg font-semibold text-foreground">
+              <h3 className="text-md font-semibold text-foreground">
                 {t("phoneVerification.title")}
               </h3>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={handleClose}
-                className="h-6 w-6 p-0 hover:bg-transparent hover:text-primary"
+                className="h-6 w-6 p-0 hover:bg-transparent text-foreground/80 hover:text-destructive"
               >
                 <X className="h-4 w-4" strokeWidth={3} />
               </Button>
             </div>
 
             <div className="mb-4">
-              <p className="text-sm text-muted-foreground mb-2">
+              <p className="text-xs text-muted-foreground mb-2">
                 {t("phoneVerification.codeSent")}{" "}
                 <span className="font-medium">{formattedPhone}</span>
               </p>
