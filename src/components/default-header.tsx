@@ -1,7 +1,7 @@
 "use client";
 import LanguageSwitcher from "@/components/ui/language-switcher";
 import { usePathname } from "@/i18n/navigation";
-import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { DefaultProfile } from "./default-profile";
@@ -15,8 +15,7 @@ const getRouteTitle = (path: string, t: (key: string) => string): string => {
   return "";
 };
 
-const DefaultHeader = () => {
-  const { data: session } = useSession();
+const DefaultHeader = ({ session }: { session?: Session | null }) => {
   const t = useTranslations("shop");
   const pathname = usePathname();
   const title = getRouteTitle(pathname, t);
@@ -44,6 +43,7 @@ const DefaultHeader = () => {
             <DefaultProfile
               className="flex h-full items-center z-10"
               size="lg"
+              session={session}
             />
           )}
         </div>

@@ -5,55 +5,53 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { HoverPopup } from "@/components/ui/hover-popup";
 import { useUser } from "@/hooks/use-user";
 import { Link } from "@/i18n/navigation";
-import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 
 interface ProfileProps {
   className?: string;
   size?: "sm" | "md" | "lg";
+  session?: Session | null;
 }
+const getSizeClasses = (size: string) => {
+  switch (size) {
+    case "md":
+      return {
+        avatar: "size-6",
+        text: "text-sm",
+        fallback: "text-xs",
+        name: "text-base",
+      };
+    case "lg":
+      return {
+        avatar: "size-8",
+        text: "text-base",
+        fallback: "text-sm",
+        name: "text-lg",
+      };
+    default:
+      return {
+        avatar: "size-4",
+        text: "text-[0.5rem]",
+        fallback: "text-[0.5rem]",
+        name: "text-[0.8rem]",
+      };
+  }
+};
 
-export function Profile({ className, size = "sm" }: ProfileProps) {
-  const t = useTranslations("header");
-  const session = useSession();
+const getInitials = (name: string) => {
+  return name
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2);
+};
+
+export function Profile({ className, size = "sm", session }: ProfileProps) {
   const { data: user } = useUser();
-  const username = user?.fullName || session?.data?.user?.name || "No Name";
-  if (!user && !session) return null;
-
-  const getInitials = (name: string) => {
-    return name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase()
-      .slice(0, 2);
-  };
-
-  const getSizeClasses = (size: string) => {
-    switch (size) {
-      case "md":
-        return {
-          avatar: "size-6",
-          text: "text-sm",
-          fallback: "text-xs",
-          name: "text-base",
-        };
-      case "lg":
-        return {
-          avatar: "size-8",
-          text: "text-base",
-          fallback: "text-sm",
-          name: "text-lg",
-        };
-      default:
-        return {
-          avatar: "size-4",
-          text: "text-[0.5rem]",
-          fallback: "text-[0.5rem]",
-          name: "text-[0.8rem]",
-        };
-    }
-  };
+  const username = user?.fullName || session?.user?.name || "Anonymous";
+  const t = useTranslations("header");
 
   const sizeClasses = getSizeClasses(size);
 

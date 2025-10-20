@@ -7,18 +7,22 @@ import { useUser } from "@/hooks/use-user";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { ChevronDown, LogOut } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 
 interface ProfileProps {
   className?: string;
   size?: "sm" | "lg";
+  session?: Session | null;
 }
 
-export function DefaultProfile({ className, size = "sm" }: ProfileProps) {
+export function DefaultProfile({
+  className,
+  size = "sm",
+  session,
+}: ProfileProps) {
   const { data: user } = useUser();
-  const { data: session } = useSession();
-  const username = user?.fullName || session?.user?.name || "No Name";
+  const username = user?.fullName || session?.user?.name || "Anonymous";
 
   const t = useTranslations("header");
 
