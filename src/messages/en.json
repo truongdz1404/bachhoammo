@@ -146,5 +146,14 @@
     "clickToSelect": "Click to select image",
     "fileSizeError": "File size must be less than {maxSize}MB",
     "fileExtensionError": "Only {extensions} files are allowed"
+  },
+  "validation": {
+    "required": "{field} is required",
+    "maxLength": "Maximum length is {max} characters",
+    "minLength": "Minimum length is {min} characters",
+    "invalidEmail": "Invalid email format",
+    "invalidPhone": "Invalid phone number format",
+    "invalidIdNumber": "Invalid ID number format",
+    "invalidUrl": "Invalid URL format"
   }
 }

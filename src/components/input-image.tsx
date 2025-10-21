@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { ImageIcon, XCircleIcon } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Dropzone from "react-dropzone";
 
 const ImagePreview = ({
@@ -35,18 +35,20 @@ interface InputImageProps {
   label?: string;
   onImageChange?: (file: File | null) => void;
   className?: string;
-  initialImageUrl?: string;
+  value?: string;
 }
 
 export default function InputImage({
   label = "Profile Picture",
   onImageChange,
   className,
-  initialImageUrl,
+  value,
 }: InputImageProps) {
-  const [profilePicture, setProfilePicture] = useState<string | null>(
-    initialImageUrl || null
-  );
+  const [profilePicture, setProfilePicture] = useState<string | null>();
+
+  useEffect(() => {
+    setProfilePicture(value);
+  }, [value]);
 
   const handleFileChange = (file: File | null) => {
     onImageChange?.(file);

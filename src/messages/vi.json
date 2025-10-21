@@ -134,5 +134,14 @@
     "clickToSelect": "Nhấn để chọn ảnh",
     "fileSizeError": "Kích thước tệp phải nhỏ hơn {maxSize}MB",
     "fileExtensionError": "Chỉ cho phép các tệp {extensions}"
+  },
+  "validation": {
+    "required": "{field} là bắt buộc",
+    "maxLength": "Độ dài tối đa là {max} ký tự",
+    "minLength": "Độ dài tối thiểu là {min} ký tự",
+    "invalidEmail": "Định dạng email không hợp lệ",
+    "invalidPhone": "Định dạng số điện thoại không hợp lệ",
+    "invalidIdNumber": "Định dạng số CCCD không hợp lệ",
+    "invalidUrl": "Định dạng URL không hợp lệ"
   }
 }

@@ -44,7 +44,7 @@ export const shopRegistrationApi = {
 
   step1Info: (shopId: string, request: CompleteStep1Request) =>
     apiClient(`/api/v1/shop-registration/${shopId}/step1-info`, {
-      ...postInit,
+      ...patchInit,
       body: JSON.stringify(request),
     }).then((response) => parseJson<CompleteShopInfoResponse>(response)),
 

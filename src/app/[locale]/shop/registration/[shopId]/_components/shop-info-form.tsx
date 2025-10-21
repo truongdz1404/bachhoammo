@@ -54,7 +54,7 @@ export function ShopInfoForm({ shopId }: ShopInfoFormProps) {
             otp: otp || "",
           });
           success = ok;
-          setError(error);
+          if (error) setError(error);
         },
         () => {
           success = false;
