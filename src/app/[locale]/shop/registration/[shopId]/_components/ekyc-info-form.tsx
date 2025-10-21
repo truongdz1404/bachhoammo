@@ -49,9 +49,14 @@ export function EKYCInfoForm({ shopId }: EKYCInfoFormProps) {
   const { register, handleSubmit, setValue, watch, formState, reset } = methods;
   const { errors } = formState;
   const [error, setError] = useState<string | undefined>();
-  const { uploadFile: uploadFront, getPublicUrl } = useUpload();
-  const { uploadFile: uploadBack } = useUpload();
-  const { uploadFile: uploadSelfie } = useUpload();
+  const {
+    uploadFile: uploadFront,
+    getPublicUrl,
+    isUploading: isUploadingFront,
+  } = useUpload();
+  const { uploadFile: uploadBack, isUploading: isUploadingBack } = useUpload();
+  const { uploadFile: uploadSelfie, isUploading: isUploadingSelfie } =
+    useUpload();
 
   const handleImageChange = async (
     file: File | null,
@@ -124,13 +129,36 @@ export function EKYCInfoForm({ shopId }: EKYCInfoFormProps) {
   return (
     <FormProvider {...methods}>
       <div className="space-y-6">
-        <Alert className="border-primary border-2 bg-primary/10 [&>svg]:text-primary">
-          <InfoIcon className="size-4" strokeWidth={3} />
-          <AlertDescription className="text-sm text-primary">
-            {t("alert")}
-          </AlertDescription>
-        </Alert>
-
+        {registration?.ekycStatus === "Draft" ? (
+          <Alert className="border-primary border-2 bg-primary/10 [&>svg]:text-primary">
+            <Spinner className="size-4 text-primary" />
+            <AlertDescription className="text-sm text-primary">
+              {t("processing")}
+            </AlertDescription>
+          </Alert>
+        ) : registration?.ekycStatus === "Verified" ? (
+          <Alert className="border-green-600 border-2 bg-green-100 [&>svg]:text-green-600">
+            <InfoIcon className="size-4" strokeWidth={3} />
+            <AlertDescription className="text-sm text-green-600">
+              {t("success")}
+            </AlertDescription>
+          </Alert>
+        ) : (
+          <Alert className="border-primary border-2 bg-primary/10 [&>svg]:text-primary">
+            <InfoIcon className="size-4" strokeWidth={3} />
+            <AlertDescription className="text-sm text-primary">
+              {t("alert")}
+            </AlertDescription>
+          </Alert>
+        )}
+        {registration?.ekycRejectionReason && (
+          <Alert className="border-destructive border-2 bg-destructive/10 [&>svg]:text-destructive">
+            <OctagonAlertIcon className="size-4" strokeWidth={3} />
+            <AlertDescription className="text-sm text-destructive">
+              {tex(registration.ekycRejectionReason)}
+            </AlertDescription>
+          </Alert>
+        )}
         <div className="grid grid-cols-12 gap-4 items-start mt-8">
           <div className="col-span-3 flex items-start justify-end">
             <Label
@@ -209,6 +237,7 @@ export function EKYCInfoForm({ shopId }: EKYCInfoFormProps) {
                   handleImageChange(file, "frontImageUrl");
                   if (!file) setValue("frontImageUrl", "");
                 }}
+                disable={isUploadingFront}
               />
               <Image src="/id.svg" alt="id icon" width={120} height={120} />
             </div>
@@ -243,6 +272,7 @@ export function EKYCInfoForm({ shopId }: EKYCInfoFormProps) {
                   handleImageChange(file, "backImageUrl");
                   if (!file) setValue("backImageUrl", "");
                 }}
+                disable={isUploadingBack}
               />
               <Image
                 src="/back-id.svg"
@@ -282,6 +312,7 @@ export function EKYCInfoForm({ shopId }: EKYCInfoFormProps) {
                   handleImageChange(file, "selfieImageUrl");
                   if (!file) setValue("selfieImageUrl", "");
                 }}
+                disable={isUploadingSelfie}
               />
               <Image
                 src="/selfie_instructions.svg"

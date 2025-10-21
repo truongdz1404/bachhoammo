@@ -22,6 +22,8 @@ export interface ShopRegistrationDetail {
   backImageUrl?: string;
   selfieImageUrl?: string;
   rejectionReason?: string;
+  ekycStatus?: string;
+  ekycRejectionReason?: string;
   createdAt: string;
   updatedAt?: string;
 }

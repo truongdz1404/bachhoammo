@@ -11,6 +11,14 @@
     "PhoneNotVerifiedException": "Số điện thoại chưa được xác minh.",
     "ShopNotFoundException": "Không tìm thấy shop.",
 
+    "OcrExtractionFailed": "Hình ảnh xác minh không hợp lệ.",
+    "OcrConfidenceTooLow": "Độ phân giải ảnh quá thấp.",
+    "FaceMatchingFailed": "Không khớp khuôn mặt.",
+    "LivenessDetectionFailed": "Không phát hiện được sự sống.",
+    "IdNumberNotMatch": "Số ID không khớp.",
+    "NameNotMatch": "Tên không khớp.",
+    "": "Đã có lỗi xảy ra.",
+
     "503": "Dịch vụ hiện không khả dụng.",
     "500": "Đã có lỗi xảy ra.",
     "404": "Không tìm thấy tài nguyên.",
@@ -95,6 +103,8 @@
         "descriptionMaxLength": "Tối đa 200 ký tự"
       },
       "ekyc": {
+        "success": "Đã xác minh thành công",
+        "processing": "Đang xác minh Thông Tin Định Danh",
         "alert": "Vui lòng cung cấp Thông Tin Định Danh của Chủ Shop (nếu cá nhân), hoặc Người Đại Diện Pháp Lý trên đăng ký kinh doanh.",
         "idNumber": "Số CCCD",
         "idNumberPlaceholder": "Nhập vào",

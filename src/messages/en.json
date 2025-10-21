@@ -11,6 +11,14 @@
     "PhoneNotVerifiedException": "Phone number has not been verified.",
     "ShopNotFoundException": "Shop not found.",
 
+    "OcrExtractionFailed": "Verification images are invalid.",
+    "OcrConfidenceTooLow": "OCR confidence is too low.",
+    "FaceMatchingFailed": "Face matching failed.",
+    "LivenessDetectionFailed": "Liveness detection failed.",
+    "IdNumberNotMatch": "ID number does not match.",
+    "NameNotMatch": "Name does not match.",
+    "": "Something went wrong.",
+
     "503": "Service is currently unavailable.",
     "500": "An error occurred.",
     "404": "Resource not found.",
@@ -107,6 +115,8 @@
         "descriptionMaxLength": "Max 200 characters"
       },
       "ekyc": {
+        "success": "Verification Successful",
+        "processing": "Verifying Identity Information",
         "alert": "Please provide Identity Information of the Shop Owner (if individual), or Legal Representative on the business registration.",
         "idNumber": "ID Number",
         "idNumberPlaceholder": "Enter here",
