@@ -1,26 +1,25 @@
 "use client";
 import LanguageSwitcher from "@/components/ui/language-switcher";
 import { usePathname } from "@/i18n/navigation";
-import { User } from "next-auth";
+import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { Logo } from "../logo";
 import { DefaultProfile } from "./default-profile";
-
-interface HeaderProps {
-  user?: User;
-}
+import { Logo } from "./logo";
 
 const getRouteTitle = (path: string, t: (key: string) => string): string => {
   if (path.startsWith("/shop/registration")) {
-    return t("shopRegistration");
+    return t("shop.shopRegistration");
+  }
+  if (path.startsWith("/shop/management")) {
+    return t("header.sellerChannel");
   }
 
   return "";
 };
 
-const DefaultHeader = ({ user }: HeaderProps) => {
-  const t = useTranslations("shop");
+const DefaultHeader = ({ session }: { session?: Session | null }) => {
+  const t = useTranslations();
   const pathname = usePathname();
   const title = getRouteTitle(pathname, t);
   return (
@@ -43,11 +42,11 @@ const DefaultHeader = ({ user }: HeaderProps) => {
 
         <div className="flex items-center gap-3 h-full">
           <LanguageSwitcher className="hidden md:flex h-full items-center z-10" />
-          {user && (
+          {session && (
             <DefaultProfile
               className="flex h-full items-center z-10"
-              user={user}
               size="lg"
+              session={session}
             />
           )}
         </div>

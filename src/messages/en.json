@@ -11,6 +11,14 @@
     "PhoneNotVerifiedException": "Phone number has not been verified.",
     "ShopNotFoundException": "Shop not found.",
 
+    "OcrExtractionFailed": "Verification images are invalid.",
+    "OcrConfidenceTooLow": "OCR confidence is too low.",
+    "FaceMatchingFailed": "Face matching failed.",
+    "LivenessDetectionFailed": "Liveness detection failed.",
+    "IdNumberNotMatch": "ID number does not match.",
+    "NameNotMatch": "Name does not match.",
+    "": "Something went wrong.",
+
     "503": "Service is currently unavailable.",
     "500": "An error occurred.",
     "404": "Resource not found.",
@@ -38,6 +46,25 @@
     "myPurchase": "My Purchase",
     "logout": "Logout"
   },
+  "sidebar": {
+    "notifications": "Notifications",
+    "orderUpdates": "Order Updates",
+    "systemUpdates": "System Updates",
+    "myAccount": "My Account",
+    "profile": "Profile",
+    "changePassword": "Change Password",
+    "myPurchase": "My Purchase",
+    "editProfile": "Edit Profile",
+    "orderManagement": "Order Management",
+    "productManagement": "Product Management",
+    "customerSupport": "Customer Support",
+    "shopManagement": "Shop Management",
+    "shopSettings": "Shop Settings",
+    "shopProfile": "Shop Profile",
+    "shopReviews": "Shop Reviews",
+    "all": "All",
+    "refund": "Refunds"
+  },
   "shop": {
     "shopRegistration": "Seller Registration",
     "registration": {
@@ -54,13 +81,13 @@
       },
       "shopInfo": {
         "shopName": "Shop Name",
-        "shopNamePlaceholder": "Bac_khoai_to",
+        "shopNamePlaceholder": "shop_name",
         "description": "Description",
         "descriptionPlaceholder": "Enter description about your shop",
         "fullName": "Full Name",
         "phoneNumber": "Phone Number",
         "email": "Email",
-        "emailPlaceholder": "truonglan342@gmail.com",
+        "emailPlaceholder": "example@gmail.com",
         "phonePrefix": "+84",
         "edit": "Edit",
         "required": "Required",
@@ -87,9 +114,19 @@
           "tooManyAttempts": "Too many requests. Please try again later.",
           "phoneAlreadyExists": "Phone number already exists.",
           "otpExpired": "Verification code has expired. Please resend."
-        }
+        },
+        "shopNameRequired": "Shop name is required",
+        "shopNameMaxLength": "Shop name must be ≤ 30 characters",
+        "phoneInvalid": "Invalid phone number format",
+        "emailInvalid": "Invalid email",
+        "emailRequired": "Email is required",
+        "phoneRequired": "Phone number is required",
+        "descriptionMaxLength": "Max 200 characters"
       },
       "ekyc": {
+        "confirm": "I confirm that I will provide accurate and truthful information. I have read and agree to the Privacy Policy.",
+        "success": "Verification Successful",
+        "processing": "Verifying Identity Information",
         "alert": "Please provide Identity Information of the Shop Owner (if individual), or Legal Representative on the business registration.",
         "idNumber": "ID Number",
         "idNumberPlaceholder": "Enter here",
@@ -106,6 +143,26 @@
         "selfieImageRequirement": "Information in the ID card and your photo must be clearly displayed (Image size should not exceed 5.0 MB)",
         "note": "I confirm that I have sufficient qualifications to provide accurate and truthful information",
         "noteDescription": "I have read and agree to Shopee's Privacy Policy."
+      },
+      "success": {
+        "title": "Shop registration successful!",
+        "description": "Please list your first product to start your selling journey with BachHoaMMO!"
+      }
+    },
+    "btn": {
+      "addProduct": "Add Product"
+    }
+  },
+  "user": {
+    "account": {
+      "profile": {
+        "myProfile": "My Profile",
+        "manageAccount": "Manage and protect your account",
+        "username": "Username",
+        "name": "Name",
+        "email": "Email",
+        "change": "Change",
+        "save": "Save"
       }
     }
   },
@@ -220,6 +277,24 @@
       "note2": "Please double-check account information before submitting",
       "note3": "Minimum withdrawal amount is 10,000 VND and maximum is 50,000,000 VND",
       "note4": "Withdrawal requests cannot be cancelled once created"
+    },
+    "inputAvatar": {
+      "fileSize": "File size: maximum {maxSize} MB",
+      "fileExtension": "File extension: {extensions}",
+      "selectImage": "Select Image",
+      "clickToSelect": "Click to select image",
+      "fileSizeError": "File size must be less than {maxSize}MB",
+      "fileExtensionError": "Only {extensions} files are allowed"
+    },
+    "validation": {
+      "required": "{field} is required",
+      "maxLength": "Maximum length is {max} characters",
+      "minLength": "Minimum length is {min} characters",
+      "invalidEmail": "Invalid email format",
+      "invalidPhone": "Invalid phone number format",
+      "invalidIdNumber": "Invalid ID number format",
+      "invalidUrl": "Invalid URL format",
+      "maxFileSize": "File size must be less than {maxSize}MB"
     }
   }
 }

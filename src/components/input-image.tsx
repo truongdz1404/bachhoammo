@@ -4,19 +4,23 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { ImageIcon, XCircleIcon } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Dropzone from "react-dropzone";
 
 const ImagePreview = ({
   url,
   onRemove,
+  disable,
 }: {
   url: string;
   onRemove: () => void;
+  disable: boolean;
 }) => (
   <div className="relative aspect-square">
     <button
-      className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2"
+      className={cn("absolute top-0 right-0 translate-x-1/2 -translate-y-1/2", {
+        invisible: disable,
+      })}
       onClick={onRemove}
     >
       <XCircleIcon className="h-5 w-5 fill-primary text-primary-foreground" />
@@ -26,7 +30,12 @@ const ImagePreview = ({
       height={500}
       width={500}
       alt=""
-      className="border border-border h-full w-full rounded-md object-cover"
+      className={cn(
+        "border border-border h-full w-full rounded-md object-cover",
+        {
+          "opacity-50 cursor-not-allowed": disable,
+        }
+      )}
     />
   </div>
 );
@@ -35,14 +44,22 @@ interface InputImageProps {
   label?: string;
   onImageChange?: (file: File | null) => void;
   className?: string;
+  value?: string;
+  disable?: boolean;
 }
 
 export default function InputImage({
   label = "Profile Picture",
   onImageChange,
   className,
+  value,
+  disable = false,
 }: InputImageProps) {
-  const [profilePicture, setProfilePicture] = useState<string | null>(null);
+  const [profilePicture, setProfilePicture] = useState<string | null>();
+
+  useEffect(() => {
+    setProfilePicture(value);
+  }, [value]);
 
   const handleFileChange = (file: File | null) => {
     onImageChange?.(file);
@@ -56,13 +73,17 @@ export default function InputImage({
           <ImagePreview
             url={profilePicture}
             onRemove={() => {
-              setProfilePicture(null);
-              handleFileChange(null);
+              if (!disable) {
+                setProfilePicture(null);
+                handleFileChange(null);
+              }
             }}
+            disable={disable}
           />
         ) : (
           <Dropzone
             onDrop={(acceptedFiles) => {
+              if (disable) return;
               const file = acceptedFiles[0];
               if (file) {
                 const imageUrl = URL.createObjectURL(file);
@@ -74,6 +95,7 @@ export default function InputImage({
               "image/png": [".png", ".jpg", ".jpeg", ".webp"],
             }}
             maxFiles={1}
+            disabled={disable}
           >
             {({
               getRootProps,
@@ -90,10 +112,13 @@ export default function InputImage({
                     "border-primary bg-secondary": isDragActive && isDragAccept,
                     "border-destructive bg-destructive/20":
                       isDragActive && isDragReject,
+                    "opacity-50 cursor-not-allowed": disable,
                   }
                 )}
+                tabIndex={disable ? -1 : 0}
+                aria-disabled={disable}
               >
-                <input {...getInputProps()} id="profile" />
+                <input {...getInputProps()} id="profile" disabled={disable} />
                 <ImageIcon className="h-16 w-16" strokeWidth={1.25} />
               </div>
             )}

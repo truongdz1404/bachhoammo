@@ -1,20 +1,11 @@
-import {
-  OtpRequestDto,
-  OtpVerifyDto,
-  sendOtp,
-  verifyOtp,
-} from "@/lib/api-client/otp-api";
+import { otpApi, OtpRequestDto, OtpVerifyDto } from "@/lib/api-client/otp-api";
 import { useCallback, useState } from "react";
 
 interface UseOtpOptions {
-  onVerificationSuccess?: () => void;
-  onVerificationStatusChange?: (isVerified: boolean) => void;
+  onVerified?: (otp: string) => void;
 }
 
-export function useOtp({
-  onVerificationSuccess,
-  onVerificationStatusChange,
-}: UseOtpOptions = {}) {
+export function useOtp({ onVerified }: UseOtpOptions = {}) {
   const [isLoading, setIsLoading] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
   const [error, setError] = useState("");
@@ -26,9 +17,9 @@ export function useOtp({
 
     try {
       const request: OtpRequestDto = { phone };
-      const result = await sendOtp(request);
+      const result = await otpApi.send(request);
 
-      if (result.success) {
+      if (result.ok) {
         return true;
       } else {
         setError(result.error || "500");
@@ -49,12 +40,11 @@ export function useOtp({
 
       try {
         const request: OtpVerifyDto = { phone, otpCode };
-        const result = await verifyOtp(request);
+        const result = await otpApi.verify(request);
 
-        if (result.success && result.data?.isVerified) {
+        if (result.ok && result.data?.isVerified) {
           setIsVerified(true);
-          onVerificationStatusChange?.(true);
-          onVerificationSuccess?.();
+          onVerified?.(otpCode);
           return true;
         } else {
           setError(result.error || "500");
@@ -67,7 +57,7 @@ export function useOtp({
         setIsVerifying(false);
       }
     },
-    [onVerificationStatusChange, onVerificationSuccess]
+    [onVerified]
   );
 
   const reset = useCallback(() => {
@@ -81,12 +71,12 @@ export function useOtp({
     setError("");
   }, []);
 
-  const setVerifiedStatus = useCallback(
-    (verified: boolean) => {
-      setIsVerified(verified);
-      onVerificationStatusChange?.(verified);
+  const setVerifiedOtp = useCallback(
+    (otp: string) => {
+      setIsVerified(otp !== undefined);
+      onVerified?.(otp);
     },
-    [onVerificationStatusChange]
+    [onVerified]
   );
 
   return {
@@ -98,6 +88,6 @@ export function useOtp({
     verify,
     reset,
     clearError,
-    setVerifiedStatus,
+    setVerifiedOtp,
   };
 }

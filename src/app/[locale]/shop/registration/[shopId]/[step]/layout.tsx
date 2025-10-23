@@ -1,9 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "@/i18n/navigation";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { use, useEffect, useMemo } from "react";
+import { use, useEffect, useMemo, useState } from "react";
 import { ProgressStepper } from "../_components/progress-stepper";
+import useFormBus from "../_hooks/useFormBus";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -16,9 +18,10 @@ interface LayoutProps {
 export default function Layout({ children, params }: LayoutProps) {
   const t = useTranslations("shop");
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const { submit } = useFormBus();
   const { shopId, step } = use(params);
   const currentStep = parseInt(step) || 1;
-  console.log({ step, currentStep });
   const steps = useMemo(
     () => [
       { id: 1, title: t("registration.steps.shopInfo") },
@@ -28,18 +31,20 @@ export default function Layout({ children, params }: LayoutProps) {
     [t]
   );
 
-  // Validate step parameter
   useEffect(() => {
     if (currentStep < 1 || currentStep > steps.length) {
       router.replace(`/shop/registration/${shopId}/1`);
     }
   }, [currentStep, steps.length, shopId, router]);
 
-  const handleNext = () => {
-    if (currentStep < steps.length) {
+  const handleNext = async () => {
+    setIsLoading(true);
+    const success = await submit?.();
+    if (success && currentStep < steps.length) {
       const nextStep = currentStep + 1;
       router.push(`/shop/registration/${shopId}/${nextStep}`);
     }
+    setIsLoading(false);
   };
 
   const handlePrevious = () => {
@@ -47,12 +52,6 @@ export default function Layout({ children, params }: LayoutProps) {
       const prevStep = currentStep - 1;
       router.push(`/shop/registration/${shopId}/${prevStep}`);
     }
-  };
-
-  const handleFinish = () => {
-    console.log("Submit form");
-    // TODO: Implement form submission logic
-    // router.push(`/shop/registration/${shopId}/success`);
   };
 
   return (
@@ -64,34 +63,30 @@ export default function Layout({ children, params }: LayoutProps) {
           </div>
         </div>
 
-        <div className="py-8 max-w-4xl mx-auto">{children}</div>
+        <div className="py-8 max-w-4xl mx-auto flex flex-col gap-y-4">
+          {children}
+        </div>
+        {currentStep < steps.length && (
+          <div className="flex justify-between items-center pt-6 border-t border-border">
+            <Button
+              variant="outline"
+              onClick={handlePrevious}
+              disabled={currentStep === 1}
+              className="rounded-md flex items-center gap-2 px-4 py-2 disabled:invisible hover:text-inherit hover:bg-border/60"
+            >
+              {t("registration.navigation.back")}
+            </Button>
 
-        <div className="flex justify-between items-center pt-6 border-t border-border">
-          <Button
-            variant="outline"
-            onClick={handlePrevious}
-            disabled={currentStep === 1}
-            className="rounded-md flex items-center gap-2 px-4 py-2 disabled:invisible hover:text-inherit hover:bg-border/60"
-          >
-            {t("registration.navigation.back")}
-          </Button>
-
-          {currentStep < steps.length ? (
             <Button
               onClick={handleNext}
+              disabled={isLoading}
               className="rounded-md flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm"
             >
+              {isLoading && <Loader2 className="mr-1 size-4 animate-spin" />}
               {t("registration.navigation.next")}
             </Button>
-          ) : (
-            <Button
-              onClick={handleFinish}
-              className="rounded-md px-4 py-2 bg-accent text-accent-foreground hover:bg-accent/90 transition-colors shadow-sm"
-            >
-              {t("registration.navigation.finish")}
-            </Button>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

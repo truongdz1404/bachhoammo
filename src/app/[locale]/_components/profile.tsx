@@ -3,54 +3,55 @@
 import SignOut from "@/components/auth/signout";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { HoverPopup } from "@/components/ui/hover-popup";
+import { useUser } from "@/hooks/use-user";
 import { Link } from "@/i18n/navigation";
-import { User } from "next-auth";
+import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 
 interface ProfileProps {
   className?: string;
-  user?: User;
   size?: "sm" | "md" | "lg";
+  session?: Session | null;
 }
+const getSizeClasses = (size: string) => {
+  switch (size) {
+    case "md":
+      return {
+        avatar: "size-6",
+        text: "text-sm",
+        fallback: "text-xs",
+        name: "text-base",
+      };
+    case "lg":
+      return {
+        avatar: "size-8",
+        text: "text-base",
+        fallback: "text-sm",
+        name: "text-lg",
+      };
+    default:
+      return {
+        avatar: "size-4",
+        text: "text-[0.5rem]",
+        fallback: "text-[0.5rem]",
+        name: "text-[0.8rem]",
+      };
+  }
+};
 
-export function Profile({ className, user, size = "sm" }: ProfileProps) {
+const getInitials = (name: string) => {
+  return name
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2);
+};
+
+export function Profile({ className, size = "sm", session }: ProfileProps) {
+  const { data: user } = useUser();
+  const username = user?.fullName || session?.user?.name || "Anonymous";
   const t = useTranslations("header");
-  if (!user) return null;
-
-  const getInitials = (name: string) => {
-    return name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase()
-      .slice(0, 2);
-  };
-
-  const getSizeClasses = (size: string) => {
-    switch (size) {
-      case "md":
-        return {
-          avatar: "size-6",
-          text: "text-sm",
-          fallback: "text-xs",
-          name: "text-base",
-        };
-      case "lg":
-        return {
-          avatar: "size-8",
-          text: "text-base",
-          fallback: "text-sm",
-          name: "text-lg",
-        };
-      default:
-        return {
-          avatar: "size-4",
-          text: "text-[0.5rem]",
-          fallback: "text-[0.5rem]",
-          name: "text-[0.8rem]",
-        };
-    }
-  };
 
   const sizeClasses = getSizeClasses(size);
 
@@ -65,15 +66,19 @@ export function Profile({ className, user, size = "sm" }: ProfileProps) {
             <Avatar
               className={`${sizeClasses.avatar} bg-primary-foreground text-primary`}
             >
-              <AvatarImage src={user.avatar} alt={user.name} />
+              <AvatarImage
+                src={user?.avatarUrl ?? ""}
+                alt={username}
+                className="object-cover size-full"
+              />
               <AvatarFallback className={sizeClasses.fallback}>
-                {getInitials(user.name)}
+                {getInitials(username)}
               </AvatarFallback>
             </Avatar>
             <span
               className={`hidden lg:inline ${sizeClasses.name} max-w-24 truncate`}
             >
-              {user.name}
+              {username}
             </span>
           </Link>
         }

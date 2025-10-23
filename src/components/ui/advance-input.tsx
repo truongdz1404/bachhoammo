@@ -23,7 +23,7 @@ export const AdvanceInput = forwardRef<HTMLInputElement, ValidationInputProps>(
         />
         {showCounter && (
           <div className="text-xs text-muted-foreground/50 font-medium absolute right-4 top-1/2 -translate-y-1/2">
-            {value.length}/{maxLength}
+            {value?.length}/{maxLength}
           </div>
         )}
       </div>

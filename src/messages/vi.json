@@ -11,6 +11,14 @@
     "PhoneNotVerifiedException": "Số điện thoại chưa được xác minh.",
     "ShopNotFoundException": "Không tìm thấy shop.",
 
+    "OcrExtractionFailed": "Hình ảnh xác minh không hợp lệ.",
+    "OcrConfidenceTooLow": "Độ phân giải ảnh quá thấp.",
+    "FaceMatchingFailed": "Không khớp khuôn mặt.",
+    "LivenessDetectionFailed": "Không phát hiện được sự sống.",
+    "IdNumberNotMatch": "Số ID không khớp.",
+    "NameNotMatch": "Tên không khớp.",
+    "": "Đã có lỗi xảy ra.",
+
     "503": "Dịch vụ hiện không khả dụng.",
     "500": "Đã có lỗi xảy ra.",
     "404": "Không tìm thấy tài nguyên.",
@@ -38,6 +46,25 @@
     "myPurchase": "Đơn Mua",
     "logout": "Đăng Xuất"
   },
+  "sidebar": {
+    "editProfile": "Sửa hồ sơ",
+    "notifications": "Thông báo",
+    "orderUpdates": "Cập nhật đơn hàng",
+    "systemUpdates": "Cập nhật hệ thống",
+    "myAccount": "Tài khoản của tôi",
+    "profile": "Hồ sơ",
+    "changePassword": "Đổi mật khẩu",
+    "myPurchase": "Đơn mua",
+    "orderManagement": "Quản lý đơn hàng",
+    "productManagement": "Quản lý sản phẩm",
+    "customerSupport": "Chăm sóc khách hàng",
+    "shopManagement": "Quản lý Shop",
+    "shopSettings": "Cài đặt cửa hàng",
+    "shopProfile": "Hồ sơ Shop",
+    "shopReviews": "Đánh giá Shop",
+    "all": "Tất cả",
+    "refund": "Hoàn tiền"
+  },
   "shop": {
     "shopRegistration": "Đăng ký trở thành Người bán",
     "registration": {
@@ -54,13 +81,13 @@
       },
       "shopInfo": {
         "shopName": "Tên Shop",
-        "shopNamePlaceholder": "Bac_khoai_to",
+        "shopNamePlaceholder": "shop_name",
         "description": "Mô tả",
         "descriptionPlaceholder": "Nhập mô tả về shop của bạn",
         "fullName": "Họ và tên",
         "phoneNumber": "Số điện thoại",
         "email": "Email",
-        "emailPlaceholder": "truonglan342@gmail.com",
+        "emailPlaceholder": "example@gmail.com",
         "phonePrefix": "+84",
         "edit": "Chỉnh sửa",
         "required": "Bắt buộc",
@@ -75,9 +102,19 @@
           "notReceived": "Không nhận được mã? Kiểm tra tin nhắn hoặc thử gửi lại.",
           "sendError": "Không thể gửi mã xác minh.",
           "verifyError": "Mã xác minh không đúng."
-        }
+        },
+        "shopNameRequired": "Tên shop là bắt buộc",
+        "shopNameMaxLength": "Tên shop phải ≤ 30 ký tự",
+        "phoneInvalid": "Định dạng số điện thoại không hợp lệ",
+        "emailInvalid": "Email không hợp lệ",
+        "emailRequired": "Email là bắt buộc",
+        "phoneRequired": "Số điện thoại là bắt buộc",
+        "descriptionMaxLength": "Tối đa 200 ký tự"
       },
       "ekyc": {
+        "confirm": "Tôi xác nhận lại có đủ tiêu chí để cung cấp là chính xác và trung thực. Tôi đã đọc và đồng ý với Chính Sách Bảo Mật",
+        "success": "Đã xác minh thành công",
+        "processing": "Đang xác minh Thông Tin Định Danh",
         "alert": "Vui lòng cung cấp Thông Tin Định Danh của Chủ Shop (nếu cá nhân), hoặc Người Đại Diện Pháp Lý trên đăng ký kinh doanh.",
         "idNumber": "Số CCCD",
         "idNumberPlaceholder": "Nhập vào",
@@ -92,8 +129,27 @@
         "selfieImageDescription": "Vui lòng cung cấp hình bạn cầm thẻ CCCD, như thế này",
         "imageRequirement": "Các thông tin trong CCCD phải được hiển thị rõ ràng (Kích thước ảnh không vượt quá 5.0 MB)",
         "selfieImageRequirement": "Các thông tin trong CCCD và ảnh của bạn phải được hiển thị rõ ràng (Kích thước ảnh không vượt quá 5.0 MB)",
-        "note": "Tôi xác nhận lại có đủ tiêu chí để cung cấp là chính xác và trung thực",
-        "noteDescription": "Tôi đã đọc và đồng ý với Chính sách Bảo Mật của Shopee."
+        "note": "Tôi xác nhận lại có đủ tiêu chí để cung cấp là chính xác và trung thực"
+      },
+      "success": {
+        "title": "Đăng ký Shop thành công!",
+        "description": "Hãy đăng bán sản phẩm đầu tiên để khởi động hành trình bán hàng cùng BachHoaMMO nhé!"
+      }
+    },
+    "btn": {
+      "addProduct": "Thêm sản phẩm"
+    }
+  },
+  "user": {
+    "account": {
+      "profile": {
+        "myProfile": "Hồ sơ của tôi",
+        "manageAccount": "Quản lý thông tin hồ sơ để bảo mật tài khoản",
+        "username": "Tên đăng nhập",
+        "name": "Tên",
+        "email": "Email",
+        "change": "Thay đổi",
+        "save": "Lưu"
       }
     }
   },
@@ -208,6 +264,24 @@
       "note2": "Vui lòng kiểm tra kỹ thông tin tài khoản trước khi gửi yêu cầu",
       "note3": "Số tiền rút tối thiểu là 10,000 VND và tối đa là 50,000,000 VND",
       "note4": "Yêu cầu rút tiền không thể hủy sau khi đã được tạo"
+    },
+    "inputAvatar": {
+      "fileSize": "Kích thước tệp: tối đa {maxSize} MB",
+      "fileExtension": "Định dạng tệp: {extensions}",
+      "selectImage": "Chọn ảnh",
+      "clickToSelect": "Nhấn để chọn ảnh",
+      "fileSizeError": "Kích thước tệp phải nhỏ hơn {maxSize}MB",
+      "fileExtensionError": "Chỉ cho phép các tệp {extensions}"
+    },
+    "validation": {
+      "required": "{field} là bắt buộc",
+      "maxLength": "Độ dài tối đa là {max} ký tự",
+      "minLength": "Độ dài tối thiểu là {min} ký tự",
+      "invalidEmail": "Định dạng email không hợp lệ",
+      "invalidPhone": "Định dạng số điện thoại không hợp lệ",
+      "invalidIdNumber": "Định dạng số CCCD không hợp lệ",
+      "invalidUrl": "Định dạng URL không hợp lệ",
+      "maxFileSize": "Kích thước tệp phải nhỏ hơn {maxSize}MB"
     }
   }
 }
