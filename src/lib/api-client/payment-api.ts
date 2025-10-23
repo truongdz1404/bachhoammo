@@ -7,7 +7,6 @@ export interface PaymentCreateRequestDto {
     buyerPhone?: string;
     returnUrl: string;
     cancelUrl: string;
-    requestId: string;
 }
 
 export interface PayOSDataDto {
@@ -20,7 +19,7 @@ export interface PayOSDataDto {
     paymentLinkId: string;
     status: string;
     checkoutUrl: string;
-    qrCode: string; // base64 or url
+    qrCode: string;
 }
 
 export interface PaymentResponseDto<T = unknown> {
@@ -34,7 +33,7 @@ export interface PaymentResponseDto<T = unknown> {
 export const createPaymentLink = async (
     request: PaymentCreateRequestDto
 ): Promise<Result<PaymentResponseDto<PayOSDataDto>>> => {
-    const response = await apiClient("/api/payments/create?api-version=1.0", {
+    const response = await apiClient("/api/v1/payment/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(request),
@@ -54,7 +53,7 @@ export const createPaymentLink = async (
 export const getPaymentStatus = async (
     orderCode: number
 ): Promise<Result<PaymentResponseDto<PayOSDataDto>>> => {
-    const response = await apiClient(`/api/payments/status?orderCode=${orderCode}&api-version=1.0`, {
+    const response = await apiClient(`/api/v1/payment/status?orderCode=${orderCode}`, {
         method: "GET",
     });
     try {

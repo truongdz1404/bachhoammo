@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { getPaymentStatus, PayOSDataDto } from "@/lib/api-client";
 import { useSearchParams } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -11,10 +10,9 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { CheckCircle2, XCircle, Loader2, ArrowRight, Receipt, Hourglass } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { usePaymentStatus } from "@/hooks/use-payment-status";
 
 export default function PaymentSuccessPage() {
-    const [loading, setLoading] = useState(true);
-    const [info, setInfo] = useState<PayOSDataDto | null>(null);
     const [message, setMessage] = useState<string>("");
     const [isSuccess, setIsSuccess] = useState(false);
     const search = useSearchParams();
@@ -24,38 +22,35 @@ export default function PaymentSuccessPage() {
         const seg = window.location.pathname.split("/").filter(Boolean)[0];
         return seg === "en" ? "/en" : "";
     }, []);
-    const order = search.get("order");
+    const orderCodeParam = search.get("orderCode");
+    const orderCodeStorage = typeof window !== "undefined" ? sessionStorage.getItem("orderCode") : null;
+    const orderCodeStr = orderCodeParam || orderCodeStorage;
+    const orderCode = orderCodeStr ? parseInt(orderCodeStr, 10) : null;
+
+    const { paymentData, status, isLoading, error } = usePaymentStatus(orderCode, {
+        refreshInterval: 0,
+        revalidateOnFocus: false,
+    });
 
     useEffect(() => {
-        const run = async () => {
+        if (!orderCode) {
+            setMessage(t("orderCodeNotFound") || "Không tìm thấy mã đơn hàng để kiểm tra trạng thái.");
+            setIsSuccess(false);
+            return;
+        }
 
-            const oc = order || sessionStorage.getItem("orderCode");
-            if (!oc) {
-                setMessage("Không tìm thấy mã đơn hàng để kiểm tra trạng thái.");
-                setLoading(false);
-                return;
-            }
+        if (error) {
+            setMessage(t("checkFailed"));
+            setIsSuccess(false);
+            return;
+        }
 
-            try {
-                const res = await getPaymentStatus(parseInt(oc, 10));
-                if (res.success && res.data?.success) {
-                    setInfo(res.data.data as PayOSDataDto);
-                    setMessage(t(info?.status === "PAID" ? "successMessage" : "pendingMessage"));
-                    setIsSuccess(true);
-                } else {
-                    setMessage(res.data?.message || res.error || t("verifyFailed"));
-                    setIsSuccess(false);
-                }
-            } catch {
-                setMessage(t("checkFailed"));
-                setIsSuccess(false);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        run();
-    }, [order, t, info?.status]);
+        if (status) {
+            const isPaid = status.toString().toUpperCase() === "PAID";
+            setMessage(t(isPaid ? "successMessage" : "pendingMessage"));
+            setIsSuccess(isPaid);
+        }
+    }, [orderCode, status, error, t]);
 
     const getStatusBadge = (status: string) => {
         switch (status) {
@@ -73,7 +68,7 @@ export default function PaymentSuccessPage() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 py-8 px-4">
             <div className="max-w-2xl mx-auto scale-90">
-                {loading ? (
+                {isLoading ? (
                     <Card className="border-0 shadow-lg">
                         <CardContent className="flex flex-col items-center justify-center py-12">
                             <Loader2 className="h-10 w-10 animate-spin text-blue-600 mb-3" />
@@ -87,8 +82,8 @@ export default function PaymentSuccessPage() {
                             <CardHeader className="text-center pb-3">
                                 <div className="flex justify-center mb-3">
                                     {isSuccess ? (
-                                        <div className={`h-16 w-16 rounded-full ${info?.status === "PAID" ? " bg-green-100" : "bg-amber-300"} flex items-center justify-center`}>
-                                            {info?.status === "PAID" ? (
+                                        <div className={`h-16 w-16 rounded-full ${paymentData?.status === "PAID" ? " bg-green-100" : "bg-amber-300"} flex items-center justify-center`}>
+                                            {paymentData?.status === "PAID" ? (
                                                 <CheckCircle2 className="h-10 w-10 text-green-600" />
 
                                             ) : (
@@ -102,15 +97,15 @@ export default function PaymentSuccessPage() {
                                         </div>
                                     )}
                                 </div>
-                                <CardTitle className={`text-2xl font-bold ${isSuccess ? (info?.status === "PAID" ? "text-green-700" : "text-yellow-700") : "text-red-700"}`}>
-                                    {isSuccess ? (info?.status === "PAID" ? t("titleSuccess") : t("titlePending")) : t("titleFailed")}
+                                <CardTitle className={`text-2xl font-bold ${isSuccess ? (paymentData?.status === "PAID" ? "text-green-700" : "text-yellow-700") : "text-red-700"}`}>
+                                    {isSuccess ? (paymentData?.status === "PAID" ? t("titleSuccess") : t("titlePending")) : t("titleFailed")}
                                 </CardTitle>
                                 <CardDescription className="text-sm mt-1">
                                     {message}
                                 </CardDescription>
                             </CardHeader>
 
-                            {info && (
+                            {paymentData && (
                                 <>
                                     <Separator />
                                     <CardContent className="pt-4">
@@ -124,26 +119,26 @@ export default function PaymentSuccessPage() {
                                             <div className="grid gap-3">
                                                 <div className="flex justify-between items-center p-2.5 bg-gray-50 rounded-lg">
                                                     <span className="text-gray-600 text-sm font-medium">{t("orderCode")}</span>
-                                                    <span className="font-semibold text-gray-900">#{info.orderCode}</span>
+                                                    <span className="font-semibold text-gray-900">#{paymentData.orderCode}</span>
                                                 </div>
 
                                                 <div className="flex justify-between items-center p-2.5 bg-blue-50 rounded-lg border-2 border-blue-200">
                                                     <span className="text-gray-600 text-sm font-medium">{t("amount")}</span>
                                                     <span className="font-bold text-xl text-blue-700">
-                                                        {info.amount.toLocaleString()} VND
+                                                        {paymentData.amount.toLocaleString()} VND
                                                     </span>
                                                 </div>
 
-                                                {info.description && (
+                                                {paymentData.description && (
                                                     <div className="flex justify-between items-start p-2.5 bg-gray-50 rounded-lg">
                                                         <span className="text-gray-600 text-sm font-medium">{t("description")}</span>
-                                                        <span className="text-gray-900 text-right text-sm max-w-xs">{info.description}</span>
+                                                        <span className="text-gray-900 text-right text-sm max-w-xs">{paymentData.description}</span>
                                                     </div>
                                                 )}
 
                                                 <div className="flex justify-between items-center p-2.5 bg-gray-50 rounded-lg">
                                                     <span className="text-gray-600 text-sm font-medium">{t("status")}</span>
-                                                    {getStatusBadge(info.status)}
+                                                    {getStatusBadge(paymentData.status)}
                                                 </div>
                                             </div>
                                         </div>
@@ -168,7 +163,7 @@ export default function PaymentSuccessPage() {
                         </Card>
 
                         {/* Info Alert */}
-                        {!info && !loading && (
+                        {!paymentData && !isLoading && (
                             <Alert>
                                 <AlertDescription className="text-center text-sm">
                                     {t("noInfo")}

@@ -23,11 +23,14 @@
     "next": "15.5.3",
     "next-auth": "^5.0.0-beta.29",
     "next-intl": "^4.3.9",
+    "next-themes": "^0.4.6",
     "radix-ui": "^1.4.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-dropzone": "^14.3.8",
     "react-qr-code": "^2.0.18",
+    "sonner": "^2.0.7",
+    "swr": "^2.3.6",
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {

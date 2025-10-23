@@ -1,7 +1,7 @@
 "use client";
 import QRCode from "react-qr-code";
 import { useEffect, useMemo, useState } from "react";
-import { createPaymentLink, getPaymentStatus, PayOSDataDto } from "@/lib/api-client";
+import { createPaymentLink, PayOSDataDto } from "@/lib/api-client";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -11,15 +11,10 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
 import { Loader2, QrCode, CreditCard, AlertCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { usePaymentStatus } from "@/hooks/use-payment-status";
 
-function randomId(len = 12) {
-  const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
-  let out = "";
-  for (let i = 0; i < len; i++) out += chars[Math.floor(Math.random() * chars.length)];
-  return out;
-}
 
-const MIN_AMOUNT = 100; // 100 VND
+const MIN_AMOUNT = 100;
 
 function InfoRow({
   label,
@@ -74,7 +69,6 @@ export default function DepositPage() {
   const [orderCode, setOrderCode] = useState<number | null>(null);
   const [createdAmount, setCreatedAmount] = useState<number | null>(null);
   const origin = typeof window !== "undefined" ? window.location.origin : "";
-  const [requestId, setRequestId] = useState<string>(`deposit_${Date.now()}_${randomId(6)}`);
   const [activeTab, setActiveTab] = useState<"qr" | "transfer">("qr");
   const t = useTranslations("payment.deposit");
   const localePrefix = useMemo(() => {
@@ -85,7 +79,6 @@ export default function DepositPage() {
 
   const suggestedAmounts = [50000, 100000, 200000, 500000, 1000000];
 
-  // Kiểm tra xem có nên disable nút tạo QR không
   const isCreateDisabled = useMemo(() => {
     return loading || amount < MIN_AMOUNT || (payosData !== null && amount === createdAmount);
   }, [loading, amount, payosData, createdAmount]);
@@ -94,10 +87,6 @@ export default function DepositPage() {
     setLoading(true);
     setError(null);
 
-    // Tạo requestId mới mỗi lần tạo QR
-    const newRequestId = `deposit_${Date.now()}_${randomId(6)}`;
-    setRequestId(newRequestId);
-   
     try {
       const returnUrl = `${origin}${localePrefix}/payment/success`;
       const cancelUrl = `${origin}${localePrefix}/payment/cancel`;
@@ -106,7 +95,6 @@ export default function DepositPage() {
         amount: Math.max(1000, Math.floor(amount)),
         returnUrl,
         cancelUrl,
-        requestId: requestId,
       });
 
       if (!res.success) {
@@ -125,14 +113,12 @@ export default function DepositPage() {
           payosData: body.data,
           orderCode: body.orderCode,
           amount: amount,
-          requestId: newRequestId
         }));
         sessionStorage.setItem("orderCode", body.orderCode.toString());
         setOrderCode(body.orderCode);
       }
-
       setPayosData(body.data as PayOSDataDto);
-      setCreatedAmount(amount); // Lưu số tiền đã tạo QR
+      setCreatedAmount(amount);
     } catch (e: unknown) {
       const message = e instanceof Error ? e.message : "Đã xảy ra lỗi";
       setError(message);
@@ -148,45 +134,25 @@ export default function DepositPage() {
       setPayosData(parsed.payosData);
       setOrderCode(parsed.orderCode);
       setCreatedAmount(parsed.amount);
-      setRequestId(parsed.requestId);
     }
   }, []);
 
+  const { status } = usePaymentStatus(orderCode);
+
   useEffect(() => {
-    if (!orderCode) return;
-    let cancelled = false;
+    if (!orderCode || !status) return;
     const successPath = `${localePrefix}/payment/success` || "/payment/success";
 
-    const interval = setInterval(async () => {
-      try {
-        const res = await getPaymentStatus(orderCode);
-        if (res.success && res.data?.success) {
-          const data = res.data.data as PayOSDataDto | undefined;
-          const status = data?.status?.toUpperCase();
-          if (status === "PAID") {
-            if (!cancelled) {
-              clearInterval(interval);
-              sessionStorage.removeItem("paymentData");
-              router.push(`${successPath}?orderCode=${orderCode}`);
-            }
-          }
-        }
-      } catch {
-        // ignore transient errors
-      }
-    }, 3000);
-
-    return () => {
-      cancelled = true;
-      clearInterval(interval);
-    };
-  }, [orderCode, router, localePrefix]);
+    if (status.toString().toUpperCase() === "PAID") {
+      sessionStorage.removeItem("paymentData");
+      router.push(`${successPath}?orderCode=${orderCode}`);
+    }
+  }, [status, orderCode, router, localePrefix]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50 px-4">
       <div className="max-w-5xl scale-90 mx-auto">
         <div className="grid lg:grid-cols-2 gap-4">
-          {/* Form Input */}
           <Card className="shadow-md border-0">
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-lg">
@@ -351,7 +317,6 @@ export default function DepositPage() {
                   </div>
                 )}
 
-                {/* Cảnh báo */}
                 <div className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-xs text-red-800">
                   <AlertCircle className="h-3.5 w-3.5 text-red-600 flex-shrink-0 mt-0.5" />
                   <span>

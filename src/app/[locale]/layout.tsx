@@ -6,7 +6,7 @@ import { getMessages } from "next-intl/server";
 import { Inter, Roboto_Mono, Staatliches } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
-
+import { Toaster } from "@/components/ui/sonner"
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -56,6 +56,7 @@ export default async function RootLayout({ children, params }: Props) {
       <body className="bg-muted">
         <NextIntlClientProvider messages={messages}>
           {children}
+          <Toaster />
         </NextIntlClientProvider>
         <Analytics />
       </body>
