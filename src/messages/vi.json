@@ -63,7 +63,16 @@
     "shopProfile": "Hồ sơ Shop",
     "shopReviews": "Đánh giá Shop",
     "all": "Tất cả",
-    "refund": "Hoàn tiền"
+    "refund": "Hoàn tiền",
+    "allProducts": "Tất cả sản phẩm",
+    "addProduct": "Thêm sản phẩm",
+    "myComplaints": "Khiếu nại của tôi",
+    "chatManagement": "Quản lý Chat",
+    "reviewManagement": "Quản lý Đánh giá",
+    "pendingApproval": "Chờ phê duyệt"
+  },
+  "admin": {
+    "title": "Quản trị viên"
   },
   "shop": {
     "shopRegistration": "Đăng ký trở thành Người bán",

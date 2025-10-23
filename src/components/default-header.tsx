@@ -14,6 +14,9 @@ const getRouteTitle = (path: string, t: (key: string) => string): string => {
   if (path.startsWith("/shop/management")) {
     return t("header.sellerChannel");
   }
+  if (path.startsWith("/admin")) {
+    return t("admin.title");
+  }
 
   return "";
 };

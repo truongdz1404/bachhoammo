@@ -3,15 +3,9 @@
 import { AnimatedCollapse } from "@/components/animated-collapse";
 import { usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
-import {
-  ChevronDown,
-  MessagesSquare,
-  Package2,
-  ShoppingBag,
-  Store,
-} from "lucide-react";
+import { ChevronDown, ShoppingBag } from "lucide-react";
 import Link from "next/link";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "use-intl";
 
 interface SidebarItem {
@@ -20,71 +14,51 @@ interface SidebarItem {
   href: string;
   badge?: string;
   isActive?: boolean;
+  defaultExpand?: boolean;
   children?: SidebarItem[];
 }
 
 const sidebarItems: SidebarItem[] = [
   {
     icon: ShoppingBag,
-    label: "orderManagement",
-    href: "",
+    label: "shopManagement",
+    href: "#",
+    defaultExpand: true,
     children: [
       {
         label: "all",
-        href: "#",
+        href: "/admin/shops",
       },
       {
-        label: "refund",
-        href: "#",
-      },
-    ],
-  },
-  {
-    icon: Package2,
-    label: "productManagement",
-    href: "",
-    children: [
-      {
-        label: "profile",
-        href: "#",
-      },
-      {
-        label: "changePassword",
-        href: "#",
-      },
-    ],
-  },
-  {
-    icon: MessagesSquare,
-    label: "customerSupport",
-    href: "",
-    children: [
-      {
-        label: "profile",
-        href: "#",
-      },
-      {
-        label: "changePassword",
-        href: "#",
-      },
-    ],
-  },
-  {
-    icon: Store,
-    label: "shopManagement",
-    href: "",
-    children: [
-      {
-        label: "shopReviews",
-        href: "#",
-      },
-      {
-        label: "shopProfile",
-        href: "#",
+        label: "pendingApproval",
+        href: "/admin/shops/pending-approval",
       },
     ],
   },
 ];
+
+const getInitialExpandedItems = (items: SidebarItem[], pathname: string) => {
+  const expandedSet = new Set<string>();
+
+  items.forEach((item) => {
+    if (item.defaultExpand && item.children) {
+      expandedSet.add(item.label);
+    }
+
+    if (item.children) {
+      const hasActiveChild = item.children.some((child) => {
+        const resolved = child.href;
+        return pathname === resolved || pathname.startsWith(resolved + "/");
+      });
+
+      if (hasActiveChild) {
+        expandedSet.add(item.label);
+      }
+    }
+  });
+
+  return Array.from(expandedSet);
+};
 
 interface SidebarProps {
   className?: string;
@@ -93,49 +67,47 @@ interface SidebarProps {
 const Sidebar = ({ className }: SidebarProps) => {
   const pathname = usePathname();
 
-  const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  const [expandedItems, setExpandedItems] = useState<string[]>(() =>
+    getInitialExpandedItems(sidebarItems, pathname)
+  );
+
+  useEffect(() => {
+    const activeParentItem = sidebarItems.find((item) => {
+      if (!item.children) return false;
+      return item.children.some((child) => {
+        const resolved = child.href;
+        return pathname === resolved || pathname.startsWith(resolved + "/");
+      });
+    });
+
+    if (activeParentItem) {
+      setExpandedItems((prev) => {
+        if (prev.includes(activeParentItem.label)) return prev;
+        return [...prev, activeParentItem.label];
+      });
+    }
+  }, [pathname]);
 
   const isExpanded = (label: string) => {
     return expandedItems.includes(label);
   };
 
   const activeItems = useMemo(() => {
-    const isActive = (href: string) =>
-      pathname === href || pathname.startsWith(href + "/");
+    const isActive = (href: string) => {
+      return pathname === href || pathname.startsWith(href + "/");
+    };
 
     const items = sidebarItems.map((item) => {
       return {
         ...item,
+        href: item.href,
         isActive: item.children ? false : isActive(item.href),
         children: item.children?.map((child) => ({
           ...child,
+          href: child.href,
           isActive: isActive(child.href),
         })),
       };
-    });
-
-    const activeParentItem = items.find((item) =>
-      item.children?.some((child) => child.isActive)
-    );
-
-    const activeRootItem = items.find(
-      (item) => !item.children && item.isActive
-    );
-
-    setExpandedItems((prev) => {
-      let newExpanded: string[] = [];
-
-      if (activeParentItem) {
-        newExpanded = [activeParentItem.label];
-      } else if (activeRootItem) {
-        newExpanded = [];
-      } else {
-        return prev;
-      }
-
-      return JSON.stringify(newExpanded) !== JSON.stringify(prev)
-        ? newExpanded
-        : prev;
     });
 
     return items;
@@ -143,10 +115,16 @@ const Sidebar = ({ className }: SidebarProps) => {
 
   const toggleExpand = (label: string, hasChildren: boolean) => {
     setExpandedItems((prev) => {
-      if (hasChildren) {
-        return prev.includes(label) ? prev : [label];
+      if (!hasChildren) return prev;
+
+      const set = new Set(prev);
+      if (set.has(label)) {
+        set.delete(label);
+      } else {
+        set.add(label);
       }
-      return [];
+
+      return Array.from(set);
     });
   };
 
@@ -155,7 +133,11 @@ const Sidebar = ({ className }: SidebarProps) => {
       <nav>
         {activeItems.map((item, index) => (
           <div key={index} className="py-2">
-            <SidebarItem item={item} onToggle={toggleExpand} />
+            <SidebarItem
+              item={item}
+              onToggle={toggleExpand}
+              isExpanded={isExpanded(item.label)}
+            />
             {item.children && (
               <AnimatedCollapse isOpen={isExpanded(item.label)}>
                 {item.children.map((child, childIndex) => (
@@ -178,20 +160,19 @@ const Sidebar = ({ className }: SidebarProps) => {
 interface SidebarItemProps {
   item: SidebarItem;
   isChild?: boolean;
+  isExpanded?: boolean;
   onToggle: (label: string, hasChildren: boolean) => void;
 }
 
-const SidebarItem = ({ item, isChild = false, onToggle }: SidebarItemProps) => {
+const SidebarItem = ({
+  item,
+  isChild = false,
+  isExpanded = false,
+  onToggle,
+}: SidebarItemProps) => {
   const t = useTranslations("sidebar");
   const Icon = item.icon;
   const hasChildren = item.children && item.children.length > 0;
-
-  const getHref = () => {
-    if (hasChildren && item.children && item.children.length > 0) {
-      return item.children[0].href;
-    }
-    return item.href;
-  };
 
   const handleClick = () => {
     if (!isChild) {
@@ -200,7 +181,7 @@ const SidebarItem = ({ item, isChild = false, onToggle }: SidebarItemProps) => {
   };
 
   return (
-    <Link href={getHref()}>
+    <Link href={item.href}>
       <div
         onClick={handleClick}
         className={cn(
@@ -227,7 +208,8 @@ const SidebarItem = ({ item, isChild = false, onToggle }: SidebarItemProps) => {
         {hasChildren && (
           <ChevronDown
             className={cn(
-              "size-4 transition-transform duration-200 group-hover:scale-110"
+              "size-4 transition-transform duration-200 group-hover:scale-110",
+              isExpanded && "rotate-180"
             )}
           />
         )}

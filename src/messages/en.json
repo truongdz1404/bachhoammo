@@ -61,9 +61,18 @@
     "shopManagement": "Shop Management",
     "shopSettings": "Shop Settings",
     "shopProfile": "Shop Profile",
-    "shopReviews": "Shop Reviews",
+    "shopReviews": "Shop Statistics",
     "all": "All",
-    "refund": "Refunds"
+    "refund": "Refunds",
+    "allProducts": "All Products",
+    "addProduct": "Add Product",
+    "myComplaints": "My Complaints",
+    "chatManagement": "Chat Management",
+    "reviewManagement": "Review Management",
+    "pendingApproval": "Pending Approval"
+  },
+  "admin": {
+    "title": "Administrator"
   },
   "shop": {
     "shopRegistration": "Seller Registration",
