@@ -3,16 +3,18 @@
 import InputImage from "@/components/input-image";
 import { AdvanceInput } from "@/components/ui/advance-input";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
 import { useRegistration } from "@/hooks/use-registration";
 import { useUpload } from "@/hooks/use-upload";
+import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { InfoIcon, OctagonAlertIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { Controller, FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import useFormBus from "../_hooks/useFormBus";
 
@@ -30,9 +32,12 @@ const ekycSchema = z.object({
   frontImageUrl: z.string().min(1, "required"),
   backImageUrl: z.string().min(1, "required"),
   selfieImageUrl: z.string().min(1, "required"),
+  confirm: z.boolean().refine((v) => v === true, "required"),
 });
 
 type FormValues = z.infer<typeof ekycSchema>;
+
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
 export function EKYCInfoForm({ shopId }: EKYCInfoFormProps) {
   const t = useTranslations("shop.registration.ekyc");
@@ -49,6 +54,7 @@ export function EKYCInfoForm({ shopId }: EKYCInfoFormProps) {
   const { register, handleSubmit, setValue, watch, formState, reset } = methods;
   const { errors } = formState;
   const [error, setError] = useState<string | undefined>();
+
   const {
     uploadFile: uploadFront,
     getPublicUrl,
@@ -62,7 +68,22 @@ export function EKYCInfoForm({ shopId }: EKYCInfoFormProps) {
     file: File | null,
     field: "frontImageUrl" | "backImageUrl" | "selfieImageUrl"
   ) => {
-    if (!file) return;
+    if (!file) {
+      methods.clearErrors(field);
+      return;
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+      methods.setError(field, {
+        type: "manual",
+        message: "maxFileSize",
+      });
+      setValue(field, "");
+      return;
+    }
+
+    methods.clearErrors(field);
+
     try {
       const objectName = `ekyc/${shopId}/${field}-${Date.now()}`;
 
@@ -245,6 +266,7 @@ export function EKYCInfoForm({ shopId }: EKYCInfoFormProps) {
               <p className="text-xs text-destructive mt-1">
                 {tva(errors.frontImageUrl.message as string, {
                   field: t("frontImage"),
+                  maxSize: MAX_FILE_SIZE / 1024 / 1024,
                 })}
               </p>
             )}
@@ -285,6 +307,7 @@ export function EKYCInfoForm({ shopId }: EKYCInfoFormProps) {
               <p className="text-xs text-destructive mt-1">
                 {tva(errors.backImageUrl.message as string, {
                   field: t("backImage"),
+                  maxSize: MAX_FILE_SIZE / 1024 / 1024,
                 })}
               </p>
             )}
@@ -326,6 +349,7 @@ export function EKYCInfoForm({ shopId }: EKYCInfoFormProps) {
               <p className="text-xs text-destructive mt-1">
                 {tva(errors.selfieImageUrl.message as string, {
                   field: t("selfieImage"),
+                  maxSize: MAX_FILE_SIZE / 1024 / 1024,
                 })}
               </p>
             )}
@@ -346,6 +370,33 @@ export function EKYCInfoForm({ shopId }: EKYCInfoFormProps) {
             </div>
           )}
         </div>
+      </div>
+      <div className="flex text-sm">
+        <div className="w-full flex items-center justify-center gap-2">
+          <Controller
+            control={methods.control}
+            name="confirm"
+            render={({ field }) => (
+              <Checkbox
+                className={cn(
+                  "border-2 border-foreground rounded-md",
+                  errors.confirm ? "border-destructive" : ""
+                )}
+                checked={!!field.value}
+                onCheckedChange={(v) => field.onChange(!!v)}
+              />
+            )}
+          />
+          <div className="text-sm">
+            <label className="select-none">{t("confirm")}</label>
+          </div>
+        </div>
+        {error && (
+          <div className="flex items-center gap-2 text-center text-sm text-destructive">
+            <OctagonAlertIcon className="size-4" />
+            {tex(error)}
+          </div>
+        )}
       </div>
     </FormProvider>
   );

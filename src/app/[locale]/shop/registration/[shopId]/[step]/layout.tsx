@@ -54,8 +54,6 @@ export default function Layout({ children, params }: LayoutProps) {
     }
   };
 
-  const handleFinish = () => {};
-
   return (
     <div className="container mx-auto px-4">
       <div className="bg-card mt-4 p-6 rounded-lg shadow-sm min-w-2xl overflow-auto">
@@ -68,17 +66,17 @@ export default function Layout({ children, params }: LayoutProps) {
         <div className="py-8 max-w-4xl mx-auto flex flex-col gap-y-4">
           {children}
         </div>
-        <div className="flex justify-between items-center pt-6 border-t border-border">
-          <Button
-            variant="outline"
-            onClick={handlePrevious}
-            disabled={currentStep === 1}
-            className="rounded-md flex items-center gap-2 px-4 py-2 disabled:invisible hover:text-inherit hover:bg-border/60"
-          >
-            {t("registration.navigation.back")}
-          </Button>
+        {currentStep < steps.length && (
+          <div className="flex justify-between items-center pt-6 border-t border-border">
+            <Button
+              variant="outline"
+              onClick={handlePrevious}
+              disabled={currentStep === 1}
+              className="rounded-md flex items-center gap-2 px-4 py-2 disabled:invisible hover:text-inherit hover:bg-border/60"
+            >
+              {t("registration.navigation.back")}
+            </Button>
 
-          {currentStep < steps.length ? (
             <Button
               onClick={handleNext}
               disabled={isLoading}
@@ -87,15 +85,8 @@ export default function Layout({ children, params }: LayoutProps) {
               {isLoading && <Loader2 className="mr-1 size-4 animate-spin" />}
               {t("registration.navigation.next")}
             </Button>
-          ) : (
-            <Button
-              onClick={handleFinish}
-              className="rounded-md px-4 py-2 bg-accent text-accent-foreground hover:bg-accent/90 transition-colors shadow-sm"
-            >
-              {t("registration.navigation.finish")}
-            </Button>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

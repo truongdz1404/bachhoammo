@@ -9,14 +9,17 @@ import { Logo } from "./logo";
 
 const getRouteTitle = (path: string, t: (key: string) => string): string => {
   if (path.startsWith("/shop/registration")) {
-    return t("shopRegistration");
+    return t("shop.shopRegistration");
+  }
+  if (path.startsWith("/shop/management")) {
+    return t("header.sellerChannel");
   }
 
   return "";
 };
 
 const DefaultHeader = ({ session }: { session?: Session | null }) => {
-  const t = useTranslations("shop");
+  const t = useTranslations();
   const pathname = usePathname();
   const title = getRouteTitle(pathname, t);
   return (

@@ -1,25 +1,21 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useUser } from "@/hooks/use-user";
+import { AnimatedCollapse } from "@/components/animated-collapse";
 import { usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import {
-  Bell,
-  Edit,
-  Flag,
-  Lock,
-  OctagonAlert,
+  ChevronDown,
+  MessagesSquare,
+  Package2,
   ShoppingBag,
-  User as UserIcon,
+  Store,
 } from "lucide-react";
 import Link from "next/link";
 import React, { useMemo, useState } from "react";
 import { useTranslations } from "use-intl";
-import { AnimatedCollapse } from "../../../../components/animated-collapse";
 
 interface SidebarItem {
-  icon: React.ElementType;
+  icon?: React.ElementType;
   label: string;
   href: string;
   badge?: string;
@@ -29,43 +25,64 @@ interface SidebarItem {
 
 const sidebarItems: SidebarItem[] = [
   {
-    icon: Bell,
-    label: "notifications",
-    href: "",
-    children: [
-      {
-        icon: Flag,
-        label: "orderUpdates",
-        href: "/user/notifications/order",
-      },
-      {
-        icon: OctagonAlert,
-        label: "systemUpdates",
-        href: "/user/notifications/system",
-      },
-    ],
-  },
-  {
-    icon: UserIcon,
-    label: "myAccount",
-    href: "",
-    children: [
-      {
-        icon: Edit,
-        label: "profile",
-        href: "/user/account/profile",
-      },
-      {
-        icon: Lock,
-        label: "changePassword",
-        href: "/user/account/change-password",
-      },
-    ],
-  },
-  {
     icon: ShoppingBag,
-    label: "myPurchase",
-    href: "/user/purchase",
+    label: "orderManagement",
+    href: "",
+    children: [
+      {
+        label: "all",
+        href: "#",
+      },
+      {
+        label: "refund",
+        href: "#",
+      },
+    ],
+  },
+  {
+    icon: Package2,
+    label: "productManagement",
+    href: "",
+    children: [
+      {
+        label: "profile",
+        href: "#",
+      },
+      {
+        label: "changePassword",
+        href: "#",
+      },
+    ],
+  },
+  {
+    icon: MessagesSquare,
+    label: "customerSupport",
+    href: "",
+    children: [
+      {
+        label: "profile",
+        href: "#",
+      },
+      {
+        label: "changePassword",
+        href: "#",
+      },
+    ],
+  },
+  {
+    icon: Store,
+    label: "shopManagement",
+    href: "",
+    children: [
+      {
+        label: "shopReviews",
+        href: "#",
+      },
+      {
+        label: "shopProfile",
+        href: "#",
+      },
+    ],
   },
 ];
 
@@ -75,12 +92,9 @@ interface SidebarProps {
 
 const Sidebar = ({ className }: SidebarProps) => {
   const pathname = usePathname();
-  const t = useTranslations("sidebar");
-  const { data: user } = useUser();
 
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
-  const username = user?.fullName || "No Name";
   const isExpanded = (label: string) => {
     return expandedItems.includes(label);
   };
@@ -135,44 +149,12 @@ const Sidebar = ({ className }: SidebarProps) => {
       return [];
     });
   };
-  const getInitials = (name: string) => {
-    return name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase()
-      .slice(0, 2);
-  };
-  return (
-    <div className={cn("text-sm w-48", className)}>
-      <div className="border-b border-border pb-4">
-        <div className="flex items-center space-x-3">
-          <Avatar className="w-10 h-10 bg-primary-foreground text-primary">
-            <AvatarImage
-              src={user?.avatarUrl ?? ""}
-              alt={username}
-              className="object-cover w-full h-full"
-            />
-            <AvatarFallback className="text-sm bg-background">
-              {getInitials(username)}
-            </AvatarFallback>
-          </Avatar>
-          <div className="flex-1 truncate">
-            <span className="text-sm font-medium">{username}</span>
-            <Link
-              href="/user/account/profile"
-              className="flex items-center gap-2 text-sm text-foreground/80 capitalize"
-            >
-              <Edit className="size-3" />
-              {t("editProfile")}
-            </Link>
-          </div>
-        </div>
-      </div>
 
-      <nav className="mt-4">
+  return (
+    <div className={cn("text-sm w-fit min-w-64", className)}>
+      <nav>
         {activeItems.map((item, index) => (
-          <div key={index}>
+          <div key={index} className="py-2">
             <SidebarItem item={item} onToggle={toggleExpand} />
             {item.children && (
               <AnimatedCollapse isOpen={isExpanded(item.label)}>
@@ -222,22 +204,33 @@ const SidebarItem = ({ item, isChild = false, onToggle }: SidebarItemProps) => {
       <div
         onClick={handleClick}
         className={cn(
-          "w-full flex items-center p-1 py-1.5 h-auto hover:text-primary transition-all duration-200 rounded-md cursor-pointer group",
-          isChild && "text-foreground/80",
+          "w-full flex items-center p-1 py-1.5 h-auto text-foreground/80 hover:text-primary transition-all duration-200 rounded-md cursor-pointer group",
+          isChild && "text-foreground",
+          !isChild && "gap-x-4 font-medium",
           item.isActive && "text-primary"
         )}
       >
         <div className="flex items-center gap-2 flex-1">
-          <Icon
-            className={cn(
-              "size-4 transition-transform duration-200 group-hover:scale-110",
-              isChild && "size-3"
-            )}
-          />
+          {Icon && (
+            <Icon
+              className={cn(
+                "size-4 transition-transform duration-200 group-hover:scale-110",
+                isChild && "size-3"
+              )}
+            />
+          )}
+
           <span className="flex-1 transition-all duration-200 capitalize">
             {t(item.label)}
           </span>
         </div>
+        {hasChildren && (
+          <ChevronDown
+            className={cn(
+              "size-4 transition-transform duration-200 group-hover:scale-110"
+            )}
+          />
+        )}
       </div>
     </Link>
   );

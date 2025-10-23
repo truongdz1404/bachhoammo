@@ -54,7 +54,16 @@
     "myAccount": "Tài khoản của tôi",
     "profile": "Hồ sơ",
     "changePassword": "Đổi mật khẩu",
-    "myPurchase": "Đơn mua"
+    "myPurchase": "Đơn mua",
+    "orderManagement": "Quản lý đơn hàng",
+    "productManagement": "Quản lý sản phẩm",
+    "customerSupport": "Chăm sóc khách hàng",
+    "shopManagement": "Quản lý Shop",
+    "shopSettings": "Cài đặt cửa hàng",
+    "shopProfile": "Hồ sơ Shop",
+    "shopReviews": "Đánh giá Shop",
+    "all": "Tất cả",
+    "refund": "Hoàn tiền"
   },
   "shop": {
     "shopRegistration": "Đăng ký trở thành Người bán",
@@ -103,6 +112,7 @@
         "descriptionMaxLength": "Tối đa 200 ký tự"
       },
       "ekyc": {
+        "confirm": "Tôi xác nhận lại có đủ tiêu chí để cung cấp là chính xác và trung thực. Tôi đã đọc và đồng ý với Chính Sách Bảo Mật",
         "success": "Đã xác minh thành công",
         "processing": "Đang xác minh Thông Tin Định Danh",
         "alert": "Vui lòng cung cấp Thông Tin Định Danh của Chủ Shop (nếu cá nhân), hoặc Người Đại Diện Pháp Lý trên đăng ký kinh doanh.",
@@ -119,9 +129,15 @@
         "selfieImageDescription": "Vui lòng cung cấp hình bạn cầm thẻ CCCD, như thế này",
         "imageRequirement": "Các thông tin trong CCCD phải được hiển thị rõ ràng (Kích thước ảnh không vượt quá 5.0 MB)",
         "selfieImageRequirement": "Các thông tin trong CCCD và ảnh của bạn phải được hiển thị rõ ràng (Kích thước ảnh không vượt quá 5.0 MB)",
-        "note": "Tôi xác nhận lại có đủ tiêu chí để cung cấp là chính xác và trung thực",
-        "noteDescription": "Tôi đã đọc và đồng ý với Chính sách Bảo Mật của Shopee."
+        "note": "Tôi xác nhận lại có đủ tiêu chí để cung cấp là chính xác và trung thực"
+      },
+      "success": {
+        "title": "Đăng ký Shop thành công!",
+        "description": "Hãy đăng bán sản phẩm đầu tiên để khởi động hành trình bán hàng cùng BachHoaMMO nhé!"
       }
+    },
+    "btn": {
+      "addProduct": "Thêm sản phẩm"
     }
   },
   "user": {
@@ -152,6 +168,7 @@
     "invalidEmail": "Định dạng email không hợp lệ",
     "invalidPhone": "Định dạng số điện thoại không hợp lệ",
     "invalidIdNumber": "Định dạng số CCCD không hợp lệ",
-    "invalidUrl": "Định dạng URL không hợp lệ"
+    "invalidUrl": "Định dạng URL không hợp lệ",
+    "maxFileSize": "Kích thước tệp phải nhỏ hơn {maxSize}MB"
   }
 }

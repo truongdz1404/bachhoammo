@@ -61,12 +61,12 @@ export function Header({ isSticky = true, session }: HeaderProps) {
             </Button>
 
             <div className="flex items-center gap-1 h-full">
-              <a
-                href="#"
+              <Link
+                href="/shop/management/1"
                 className="hover:opacity-80 transition-opacity h-full flex items-center"
               >
                 {t("sellerChannel")}
-              </a>
+              </Link>
               <span className="text-primary-foreground/40 hidden sm:inline">
                 |
               </span>

@@ -54,7 +54,16 @@
     "profile": "Profile",
     "changePassword": "Change Password",
     "myPurchase": "My Purchase",
-    "editProfile": "Edit Profile"
+    "editProfile": "Edit Profile",
+    "orderManagement": "Order Management",
+    "productManagement": "Product Management",
+    "customerSupport": "Customer Support",
+    "shopManagement": "Shop Management",
+    "shopSettings": "Shop Settings",
+    "shopProfile": "Shop Profile",
+    "shopReviews": "Shop Reviews",
+    "all": "All",
+    "refund": "Refunds"
   },
   "shop": {
     "shopRegistration": "Seller Registration",
@@ -115,6 +124,7 @@
         "descriptionMaxLength": "Max 200 characters"
       },
       "ekyc": {
+        "confirm": "I confirm that I will provide accurate and truthful information. I have read and agree to the Privacy Policy.",
         "success": "Verification Successful",
         "processing": "Verifying Identity Information",
         "alert": "Please provide Identity Information of the Shop Owner (if individual), or Legal Representative on the business registration.",
@@ -133,7 +143,14 @@
         "selfieImageRequirement": "Information in the ID card and your photo must be clearly displayed (Image size should not exceed 5.0 MB)",
         "note": "I confirm that I have sufficient qualifications to provide accurate and truthful information",
         "noteDescription": "I have read and agree to Shopee's Privacy Policy."
+      },
+      "success": {
+        "title": "Shop registration successful!",
+        "description": "Please list your first product to start your selling journey with BachHoaMMO!"
       }
+    },
+    "btn": {
+      "addProduct": "Add Product"
     }
   },
   "user": {
@@ -164,6 +181,7 @@
     "invalidEmail": "Invalid email format",
     "invalidPhone": "Invalid phone number format",
     "invalidIdNumber": "Invalid ID number format",
-    "invalidUrl": "Invalid URL format"
+    "invalidUrl": "Invalid URL format",
+    "maxFileSize": "File size must be less than {maxSize}MB"
   }
 }
