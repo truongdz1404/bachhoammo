@@ -97,7 +97,7 @@ export default function DepositPage() {
         cancelUrl,
       });
 
-      if (!res.success) {
+      if (!res.ok) {
         setError(res.error || t("depositInfo.createLinkError"));
         return;
       }

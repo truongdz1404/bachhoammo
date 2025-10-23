@@ -57,11 +57,10 @@ export default async function RootLayout({ children, params }: Props) {
     >
       <body className="bg-muted">
         <NextIntlClientProvider messages={messages}>
-          {children}
-          <Toaster />
           <SessionProvider>
             <SWRProvider>{children}</SWRProvider>
           </SessionProvider>
+          <Toaster />
         </NextIntlClientProvider>
         <Analytics />
       </body>

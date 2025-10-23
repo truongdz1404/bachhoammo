@@ -42,11 +42,11 @@ export const createPaymentLink = async (
     try {
         const data = (await response.json()) as PaymentResponseDto<PayOSDataDto>;
         if (response.ok) {
-            return { success: true, data };
+            return { ok: true, data };
         }
-        return { success: false, error: data?.message || response.status.toString() };
+        return { ok: false, error: data?.message || response.status.toString() };
     } catch {
-        return { success: false, error: response.status.toString() };
+        return { ok: false, error: response.status.toString() };
     }
 };
 
@@ -59,10 +59,10 @@ export const getPaymentStatus = async (
     try {
         const data = (await response.json()) as PaymentResponseDto<PayOSDataDto>;
         if (response.ok) {
-            return { success: true, data };
+            return { ok: true, data };
         }
-        return { success: false, error: data?.message || response.status.toString() };
+        return { ok: false, error: data?.message || response.status.toString() };
     } catch {
-        return { success: false, error: response.status.toString() };
+        return { ok: false, error: response.status.toString() };
     }
 };
