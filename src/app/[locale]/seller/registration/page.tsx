@@ -20,7 +20,7 @@ export default function Page() {
       const result = await shopRegistrationApi.start();
       if (result.ok && result.data) {
         router.push(
-          `/shop/registration/${result.data.shopId}/${result.data.currentStep}`
+          `registration/${result.data.shopId}/${result.data.currentStep}`
         );
       } else {
       }

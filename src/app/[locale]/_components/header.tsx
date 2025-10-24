@@ -62,7 +62,7 @@ export function Header({ isSticky = true, session }: HeaderProps) {
 
             <div className="flex items-center gap-1 h-full">
               <Link
-                href="/shop/management/1"
+                href="/seller/1"
                 className="hover:opacity-80 transition-opacity h-full flex items-center"
               >
                 {t("sellerChannel")}
@@ -71,7 +71,7 @@ export function Header({ isSticky = true, session }: HeaderProps) {
                 |
               </span>
               <Link
-                href="/shop/registration"
+                href="/seller/registration"
                 className="hover:opacity-80 transition-opacity hidden h-full sm:flex items-center"
               >
                 {t("becomeSeller")}

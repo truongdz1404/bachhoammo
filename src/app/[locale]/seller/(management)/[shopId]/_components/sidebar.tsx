@@ -33,11 +33,11 @@ const sidebarItems: SidebarItem[] = [
     children: [
       {
         label: "all",
-        href: "/shop/management/[shopId]/orders",
+        href: "/seller/[shopId]/orders",
       },
       {
         label: "refund",
-        href: "/shop/management/[shopId]/orders/refund",
+        href: "/seller/[shopId]/orders/refund",
       },
     ],
   },
@@ -49,11 +49,11 @@ const sidebarItems: SidebarItem[] = [
     children: [
       {
         label: "allProducts",
-        href: "/shop/management/[shopId]/products",
+        href: "/seller/[shopId]/products",
       },
       {
         label: "addProduct",
-        href: "/shop/management/[shopId]/products/add",
+        href: "/seller/[shopId]/products/add",
       },
     ],
   },
@@ -65,11 +65,11 @@ const sidebarItems: SidebarItem[] = [
     children: [
       {
         label: "chatManagement",
-        href: "/shop/management/[shopId]/chats",
+        href: "/seller/[shopId]/chats",
       },
       {
         label: "reviewManagement",
-        href: "/shop/management/[shopId]/reviews",
+        href: "/seller/[shopId]/reviews",
       },
     ],
   },
@@ -81,15 +81,15 @@ const sidebarItems: SidebarItem[] = [
     children: [
       {
         label: "shopReviews",
-        href: "/shop/management/[shopId]/statistics",
+        href: "/seller/[shopId]/statistics",
       },
       {
         label: "shopProfile",
-        href: "/shop/management/[shopId]/profile",
+        href: "/seller/[shopId]/profile",
       },
       {
         label: "myComplaints",
-        href: "/shop/management/[shopId]/complaints",
+        href: "/seller/[shopId]/complaints",
       },
     ],
   },
