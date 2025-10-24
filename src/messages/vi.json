@@ -273,24 +273,24 @@
       "note2": "Vui lòng kiểm tra kỹ thông tin tài khoản trước khi gửi yêu cầu",
       "note3": "Số tiền rút tối thiểu là 10,000 VND và tối đa là 50,000,000 VND",
       "note4": "Yêu cầu rút tiền không thể hủy sau khi đã được tạo"
-    },
-    "inputAvatar": {
-      "fileSize": "Kích thước tệp: tối đa {maxSize} MB",
-      "fileExtension": "Định dạng tệp: {extensions}",
-      "selectImage": "Chọn ảnh",
-      "clickToSelect": "Nhấn để chọn ảnh",
-      "fileSizeError": "Kích thước tệp phải nhỏ hơn {maxSize}MB",
-      "fileExtensionError": "Chỉ cho phép các tệp {extensions}"
-    },
-    "validation": {
-      "required": "{field} là bắt buộc",
-      "maxLength": "Độ dài tối đa là {max} ký tự",
-      "minLength": "Độ dài tối thiểu là {min} ký tự",
-      "invalidEmail": "Định dạng email không hợp lệ",
-      "invalidPhone": "Định dạng số điện thoại không hợp lệ",
-      "invalidIdNumber": "Định dạng số CCCD không hợp lệ",
-      "invalidUrl": "Định dạng URL không hợp lệ",
-      "maxFileSize": "Kích thước tệp phải nhỏ hơn {maxSize}MB"
     }
+  },
+  "inputAvatar": {
+    "fileSize": "Kích thước tệp: tối đa {maxSize} MB",
+    "fileExtension": "Định dạng tệp: {extensions}",
+    "selectImage": "Chọn ảnh",
+    "clickToSelect": "Nhấn để chọn ảnh",
+    "fileSizeError": "Kích thước tệp phải nhỏ hơn {maxSize}MB",
+    "fileExtensionError": "Chỉ cho phép các tệp {extensions}"
+  },
+  "validation": {
+    "required": "{field} là bắt buộc",
+    "maxLength": "Độ dài tối đa là {max} ký tự",
+    "minLength": "Độ dài tối thiểu là {min} ký tự",
+    "invalidEmail": "Định dạng email không hợp lệ",
+    "invalidPhone": "Định dạng số điện thoại không hợp lệ",
+    "invalidIdNumber": "Định dạng số CCCD không hợp lệ",
+    "invalidUrl": "Định dạng URL không hợp lệ",
+    "maxFileSize": "Kích thước tệp phải nhỏ hơn {maxSize}MB"
   }
 }

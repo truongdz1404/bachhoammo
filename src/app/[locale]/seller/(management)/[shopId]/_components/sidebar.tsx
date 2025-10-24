@@ -161,10 +161,7 @@ const Sidebar = ({ className, shopId }: SidebarProps) => {
   };
 
   const activeItems = useMemo(() => {
-    const isActive = (href: string) => {
-      const resolved = getActPath(shopId, href);
-      return pathname === resolved || pathname.startsWith(resolved + "/");
-    };
+    const isActive = (href: string) => pathname === getActPath(shopId, href);
 
     const items = sidebarItems.map((item) => {
       return {

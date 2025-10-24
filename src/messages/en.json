@@ -286,24 +286,24 @@
       "note2": "Please double-check account information before submitting",
       "note3": "Minimum withdrawal amount is 10,000 VND and maximum is 50,000,000 VND",
       "note4": "Withdrawal requests cannot be cancelled once created"
-    },
-    "inputAvatar": {
-      "fileSize": "File size: maximum {maxSize} MB",
-      "fileExtension": "File extension: {extensions}",
-      "selectImage": "Select Image",
-      "clickToSelect": "Click to select image",
-      "fileSizeError": "File size must be less than {maxSize}MB",
-      "fileExtensionError": "Only {extensions} files are allowed"
-    },
-    "validation": {
-      "required": "{field} is required",
-      "maxLength": "Maximum length is {max} characters",
-      "minLength": "Minimum length is {min} characters",
-      "invalidEmail": "Invalid email format",
-      "invalidPhone": "Invalid phone number format",
-      "invalidIdNumber": "Invalid ID number format",
-      "invalidUrl": "Invalid URL format",
-      "maxFileSize": "File size must be less than {maxSize}MB"
     }
+  },
+  "inputAvatar": {
+    "fileSize": "File size: maximum {maxSize} MB",
+    "fileExtension": "File extension: {extensions}",
+    "selectImage": "Select Image",
+    "clickToSelect": "Click to select image",
+    "fileSizeError": "File size must be less than {maxSize}MB",
+    "fileExtensionError": "Only {extensions} files are allowed"
+  },
+  "validation": {
+    "required": "{field} is required",
+    "maxLength": "Maximum length is {max} characters",
+    "minLength": "Minimum length is {min} characters",
+    "invalidEmail": "Invalid email format",
+    "invalidPhone": "Invalid phone number format",
+    "invalidIdNumber": "Invalid ID number format",
+    "invalidUrl": "Invalid URL format",
+    "maxFileSize": "File size must be less than {maxSize}MB"
   }
 }
