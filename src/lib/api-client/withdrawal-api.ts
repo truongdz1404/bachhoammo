@@ -71,6 +71,7 @@ export type EstimatePayoutPayload = {
   amount: number;
   toBin: string;
   toAccountNumber: string;
+  description?: string;
   category?: string[];
 };
 
@@ -83,12 +84,27 @@ export type EstimatePayoutResponse = {
 };
 
 export async function estimatePayoutCost(locale: string, payload: EstimatePayoutPayload) {
+  const requestBody = {
+    referenceId: `EST_${Date.now()}`,
+    category: payload.category || ["PERSONAL"],
+    validateDestination: true,
+    payouts: [
+      {
+        referenceId: `PAYOUT_${Date.now()}`,
+        amount: payload.amount,
+        description: payload.description || `Estimate for ${payload.amount} VND`,
+        toBin: payload.toBin,
+        toAccountNumber: payload.toAccountNumber,
+      },
+    ],
+  };
+
   const res = await apiClient(`/api/v1/withdrawal/estimate`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(payload),
+    body: JSON.stringify(requestBody),
     credentials: "include",
   });
 
@@ -101,5 +117,13 @@ export async function estimatePayoutCost(locale: string, payload: EstimatePayout
     throw new Error(message);
   }
 
-  return (await res.json()) as EstimatePayoutResponse;
+  const response = await res.json();
+
+  return {
+    success: response.success ?? false,
+    message: response.message ?? "",
+    fee: response.fee ?? response.Fee ?? 0,
+    total: response.total ?? response.Total,
+    data: response.data ?? response.Data,
+  } as EstimatePayoutResponse;
 }
